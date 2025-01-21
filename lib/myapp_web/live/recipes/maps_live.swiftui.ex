@@ -1,5 +1,5 @@
-defmodule CookbookWeb.MapsLive.SwiftUI do
-  use CookbookNative, [:render_component, format: :swiftui]
+defmodule MyappWeb.MapsLive.SwiftUI do
+  use MyappNative, [:render_component, format: :swiftui]
 
   def render(assigns, %{ "target" => target } = _interface) do
     assigns = assign(assigns, :target, target)

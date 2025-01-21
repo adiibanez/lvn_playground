@@ -1,6 +1,6 @@
-defmodule CookbookWeb.CardRowLive do
-  use CookbookWeb, :live_view
-  use CookbookNative, :live_view
+defmodule MyappWeb.CardRowLive do
+  use MyappWeb, :live_view
+  use MyappNative, :live_view
 
   def render(assigns) do
     ~H""

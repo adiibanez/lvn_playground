@@ -1,6 +1,6 @@
-defmodule CookbookWeb.ScrollAutomationLive do
-  use CookbookWeb, :live_view
-  use CookbookNative, :live_view
+defmodule MyappWeb.ScrollAutomationLive do
+  use MyappWeb, :live_view
+  use MyappNative, :live_view
 
   @lyrics (for i <- 1..100, do: "This is lyric line #{i}")
 

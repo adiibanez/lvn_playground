@@ -1,5 +1,5 @@
-defmodule CookbookWeb.PyramidNavigationLive.SwiftUI do
-  use CookbookNative, [:render_component, format: :swiftui]
+defmodule MyappWeb.PyramidNavigationLive.SwiftUI do
+  use MyappNative, [:render_component, format: :swiftui]
 
   def render(assigns, %{ "target" => "macos" } = _interface) do
     ~LVN"""

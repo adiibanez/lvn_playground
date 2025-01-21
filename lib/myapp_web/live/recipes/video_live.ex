@@ -1,6 +1,6 @@
-defmodule CookbookWeb.VideoLive do
-  use CookbookWeb, :live_view
-  use CookbookNative, :live_view
+defmodule MyappWeb.VideoLive do
+  use MyappWeb, :live_view
+  use MyappNative, :live_view
 
   @info [
     {0, "Details about the video will appear here."},

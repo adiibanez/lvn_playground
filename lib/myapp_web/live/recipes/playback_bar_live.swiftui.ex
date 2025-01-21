@@ -1,5 +1,5 @@
-defmodule CookbookWeb.PlaybackBarLive.SwiftUI do
-  use CookbookNative, [:render_component, format: :swiftui]
+defmodule MyappWeb.PlaybackBarLive.SwiftUI do
+  use MyappNative, [:render_component, format: :swiftui]
 
   # iOS
 

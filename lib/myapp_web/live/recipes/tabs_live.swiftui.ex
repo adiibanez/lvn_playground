@@ -1,5 +1,5 @@
-defmodule CookbookWeb.TabsLive.SwiftUI do
-  use CookbookNative, [:render_component, format: :swiftui]
+defmodule MyappWeb.TabsLive.SwiftUI do
+  use MyappNative, [:render_component, format: :swiftui]
 
   def render(assigns) do
     ~LVN"""

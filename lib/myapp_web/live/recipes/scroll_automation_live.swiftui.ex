@@ -1,5 +1,5 @@
-defmodule CookbookWeb.ScrollAutomationLive.SwiftUI do
-  use CookbookNative, [:render_component, format: :swiftui]
+defmodule MyappWeb.ScrollAutomationLive.SwiftUI do
+  use MyappNative, [:render_component, format: :swiftui]
 
   def render(assigns, _interface) do
     ~LVN"""

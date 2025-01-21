@@ -1,6 +1,6 @@
-defmodule CookbookWeb.SectionedGridLive do
-  use CookbookWeb, :live_view
-  use CookbookNative, :live_view
+defmodule MyappWeb.SectionedGridLive do
+  use MyappWeb, :live_view
+  use MyappNative, :live_view
 
   def mount(_params, _session, socket) do
     {:ok, socket}

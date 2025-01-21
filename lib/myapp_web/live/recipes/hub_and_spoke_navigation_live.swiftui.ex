@@ -1,7 +1,7 @@
-defmodule CookbookWeb.HubAndSpokeNavigationLive.SwiftUI do
-  use CookbookNative, [:render_component, format: :swiftui]
+defmodule MyappWeb.HubAndSpokeNavigationLive.SwiftUI do
+  use MyappNative, [:render_component, format: :swiftui]
 
-  import CookbookWeb.CoreComponents.SwiftUI
+  import MyappWeb.CoreComponents.SwiftUI
 
   def render(assigns) do
     ~LVN"""

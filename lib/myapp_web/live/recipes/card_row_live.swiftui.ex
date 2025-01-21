@@ -1,5 +1,5 @@
-defmodule CookbookWeb.CardRowLive.SwiftUI do
-  use CookbookNative, [:render_component, format: :swiftui]
+defmodule MyappWeb.CardRowLive.SwiftUI do
+  use MyappNative, [:render_component, format: :swiftui]
 
   def render(assigns, interface) do
     target = Map.get(interface, "target", "ios")
