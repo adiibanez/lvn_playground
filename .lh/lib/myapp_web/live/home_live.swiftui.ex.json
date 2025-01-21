@@ -1,0 +1,46 @@
+{
+    "sourceFile": "lib/myapp_web/live/home_live.swiftui.ex",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1737486316632,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1737486327221,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,3 +1,9 @@\n defmodule MyappWeb.HomeLive.SwiftUI do\n   use MyappNative, [:render_component, format: :swiftui]\n+\n+  def render(assigns, _interface) do\n+    ~LVN\"\"\"\n+    <Text>Hello, LiveView Native!</Text>\n+    \"\"\"\n+  end\n end\n"
+                },
+                {
+                    "date": 1737486554522,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+defmodule MyappWeb.HomeLive.SwiftUI do\n+  use MyappNative, [:render_component, format: :swiftui]\n+\n+  def render(assigns, _interface) do\n+    ~LVN\"\"\"\n+    <VStack>\n+      <Text>\n+        Hello SwiftUI!\n+      </Text>\n+    </VStack>    \"\"\"\n+  end\n+end\n"
+                },
+                {
+                    "date": 1737486565261,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,16 +6,8 @@\n     <VStack>\n       <Text>\n         Hello SwiftUI!\n       </Text>\n-    </VStack>    \"\"\"\n-  end\n-end\n-defmodule MyappWeb.HomeLive.SwiftUI do\n-  use MyappNative, [:render_component, format: :swiftui]\n-\n-  def render(assigns, _interface) do\n-    ~LVN\"\"\"\n-    <Text>Hello, LiveView Native!</Text>\n+    </VStack>\n     \"\"\"\n   end\n end\n"
+                },
+                {
+                    "date": 1737486657326,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \n   def render(assigns, _interface) do\n     ~LVN\"\"\"\n     <VStack>\n-      <Text>\n+        <Text>\n         Hello SwiftUI!\n       </Text>\n     </VStack>\n     \"\"\"\n"
+                },
+                {
+                    "date": 1737493485400,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n   def render(assigns, _interface) do\n     ~LVN\"\"\"\n     <VStack>\n         <Text>\n-        Hello SwiftUI!\n+        Hello SwiftUI 123!\n       </Text>\n     </VStack>\n     \"\"\"\n   end\n"
+                },
+                {
+                    "date": 1737501743882,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n defmodule MyappWeb.HomeLive.SwiftUI do\n   use MyappNative, [:render_component, format: :swiftui]\n \n-  def render(assigns, _interface) do\n+  def render(assigns, interface) do\n     ~LVN\"\"\"\n     <VStack>\n         <Text>\n         Hello SwiftUI 123!\n"
+                },
+                {
+                    "date": 1737501757567,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,124 @@\n+defmodule MyappWeb.HomeLive.SwiftUI do\n+  use MyappNative, [:render_component, format: :swiftui]\n+\n+  def render(assigns, interface) do\n+    target = Map.get(interface, \"target\", \"ios\")\n+    assigns = assign(assigns, :target, target)\n+    ~LVN\"\"\"\n+    <List\n+      id=\"cookbook\"\n+      style={[\n+        \"listStyle(.plain)\",\n+        ~s[navigationTitle(\"Cookbook\")],\n+        \"toolbar(content: :toolbar)\"\n+      ]}\n+    >\n+      <ToolbarItem template=\"toolbar\">\n+        <.link href=\"https://github.com/liveview-native/cookbook\" style=\"buttonStyle(.automatic);\">\n+          <.icon name=\"info.circle\" />\n+        </.link>\n+      </ToolbarItem>\n+      <Section style=\"listSectionSeparator(.hidden); listSectionSpacing(0);\">\n+        <ScrollView\n+          axes=\"horizontal\"\n+          style={[\n+            \"scrollTargetBehavior(.viewAligned)\",\n+            \"scrollIndicators(.hidden)\",\n+            \"safeAreaPadding(.horizontal, 16)\",\n+            \"listRowInsets(EdgeInsets())\",\n+            \"listRowSpacing(0)\",\n+            \"listRowBackground(:none)\",\n+            \"padding(.vertical, 8)\"\n+          ]}\n+        >\n+          <HStack style=\"scrollTargetLayout();\">\n+            <Group\n+              style={[\n+                ~s[containerRelativeFrame(.horizontal, count: attr(\"count\"), span: 1, spacing: 16)]\n+              ]}\n+              count={if @target == \"ios\", do: 1, else: 3}\n+            >\n+              <.featured_recipe\n+                :for={{recipe, index} <- Enum.with_index(@featured_recipes)}\n+                recipe={recipe}\n+                hue={index / length(@featured_recipes)}\n+              />\n+            </Group>\n+          </HStack>\n+        </ScrollView>\n+      </Section>\n+      <Section>\n+        <HStack template=\"header\">\n+          <Text>Recipes</Text>\n+          <Spacer />\n+          <Menu>\n+            <Label template=\"label\" systemImage={if @selected_category == nil, do: \"line.3.horizontal.decrease.circle\", else: \"line.3.horizontal.decrease.circle.fill\"}>\n+              <%= @selected_category || \"All\" %>\n+            </Label>\n+\n+            <Button phx-click=\"clear-filter\">All</Button>\n+            <Button\n+              :for={category <- @categories}\n+              phx-click=\"filter\"\n+              phx-value-category={category}\n+            >\n+              <%= category %>\n+            </Button>\n+          </Menu>\n+        </HStack>\n+        <.link\n+          :for={recipe <- @recipes}\n+          navigate={recipe.path}\n+        >\n+          <Label>\n+            <VStack alignment=\"leading\" template=\"title\">\n+              <Text><%= recipe.metadata.title %></Text>\n+              <Text style=\"foregroundStyle(.secondary);\"><%= recipe.metadata.description %></Text>\n+            </VStack>\n+            <Image template=\"icon\" systemName={recipe.metadata.icon} />\n+          </Label>\n+        </.link>\n+      </Section>\n+    </List>\n+    \"\"\"\n+  end\n+\n+  attr :recipe, :any\n+  attr :hue, :float\n+  def featured_recipe(assigns) do\n+    ~LVN\"\"\"\n+    <.link navigate={@recipe.path} style=\"buttonStyle(.plain);\">\n+      <VStack\n+        alignment=\"leading\"\n+        style={[\n+          \"padding()\",\n+          ~s[background(Color(hue: attr(\"hue\"), saturation: 0.75, brightness: 0.85), in: .rect(cornerRadius: 10, style: .continuous))],\n+          \"foregroundStyle(.white)\",\n+          \"aspectRatio(1.777, contentMode: .fill)\",\n+        ]}\n+        hue={@hue}\n+      >\n+        <.icon\n+          name={@recipe.metadata.icon}\n+          style={[\n+            \"resizable()\",\n+            \"symbolRenderingMode(.hierarchical)\",\n+            \"scaledToFit()\",\n+            \"padding(10)\",\n+            \"frame(maxWidth: 130, maxHeight: 130)\",\n+            \"frame(maxWidth: .infinity, maxHeight: .infinity)\",\n+          ]}\n+        />\n+        <VStack alignment=\"leading\">\n+          <Text style=\"font(.title3); bold();\">\n+            <%= @recipe.metadata.title %>\n+          </Text>\n+          <Text style=\"font(.caption); foregroundStyle(.white.secondary); lineLimit(1);\">\n+            <%= @recipe.metadata.description %>\n+          </Text>\n+        </VStack>\n+      </VStack>\n+    </.link>\n+    \"\"\"\n+  end\n+end\n"
+                }
+            ],
+            "date": 1737486316632,
+            "name": "Commit-0",
+            "content": "defmodule MyappWeb.HomeLive.SwiftUI do\n  use MyappNative, [:render_component, format: :swiftui]\nend\n"
+        }
+    ]
+}

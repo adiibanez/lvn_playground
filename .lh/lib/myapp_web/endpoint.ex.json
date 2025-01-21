@@ -1,0 +1,18 @@
+{
+    "sourceFile": "lib/myapp_web/endpoint.ex",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1737485434281,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1737485434281,
+            "name": "Commit-0",
+            "content": "defmodule MyappWeb.Endpoint do\n  use Phoenix.Endpoint, otp_app: :myapp\n\n  # The session will be stored in the cookie and signed,\n  # this means its contents can be read but not tampered with.\n  # Set :encryption_salt if you would also like to encrypt it.\n  @session_options [\n    store: :cookie,\n    key: \"_myapp_key\",\n    signing_salt: \"75fPAdCE\",\n    same_site: \"Lax\"\n  ]\n\n  socket \"/live\", Phoenix.LiveView.Socket,\n    websocket: [connect_info: [session: @session_options]],\n    longpoll: [connect_info: [session: @session_options]]\n\n  # Serve at \"/\" the static files from \"priv/static\" directory.\n  #\n  # You should set gzip to true if you are running phx.digest\n  # when deploying your static files in production.\n  plug Plug.Static,\n    at: \"/\",\n    from: :myapp,\n    gzip: false,\n    only: MyappWeb.static_paths()\n\n  # Code reloading can be explicitly enabled under the\n  # :code_reloader configuration of your endpoint.\n  if code_reloading? do\n    socket \"/phoenix/live_reload/socket\", Phoenix.LiveReloader.Socket\n    plug Phoenix.LiveReloader\n    plug LiveViewNative.LiveReloader\n    plug Phoenix.CodeReloader\n    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :myapp\n    plug LiveViewNative.LiveReloader\n  end\n\n  plug Phoenix.LiveDashboard.RequestLogger,\n    param_key: \"request_logger\",\n    cookie_key: \"request_logger\"\n\n  plug Plug.RequestId\n  plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]\n\n  plug Plug.Parsers,\n    parsers: [:urlencoded, :multipart, :json],\n    pass: [\"*/*\"],\n    json_decoder: Phoenix.json_library()\n\n  plug Plug.MethodOverride\n  plug Plug.Head\n  plug Plug.Session, @session_options\n  plug MyappWeb.Router\nend\n"
+        }
+    ]
+}

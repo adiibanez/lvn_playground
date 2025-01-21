@@ -1,0 +1,50 @@
+{
+    "sourceFile": "lib/myapp_web/live/HomeLive.ex",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 8,
+            "patches": [
+                {
+                    "date": 1737485715571,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1737485855715,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,7 @@\n+defmodule MyappWeb.HomeLive do\n+  use MyappWeb, :live_view, def(render(assigns)) do\n+    ~H\"\"\"\n+    <h1>Welcome to LiveView!</h1>\n+    \"\"\"\n+  end\n+end\n"
+                },
+                {
+                    "date": 1737486136155,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,16 +1,10 @@\n defmodule MyappWeb.HomeLive do\n-  use MyappWeb, :live_view, def(render(assigns)) do\n-    ~H\"\"\"\n-    <h1>Welcome to LiveView!</h1>\n-    \"\"\"\n-  end\n-end\n-defmodule MyappWeb.HomeLive do\n   use MyappWeb, :live_view\n+  use MyAppNative, :live_view\n \n-  def render(assigns) do\n-    ~H\"\"\"\n-    <h1>Welcome to LiveView!</h1>\n-    \"\"\"\n-  end\n+  # def(render(assigns)) do\n+  #   ~H\"\"\"\n+  #   <h1>Welcome to LiveView!</h1>\n+  #   \"\"\"\n+  # end\n end\n"
+                },
+                {
+                    "date": 1737486226215,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n defmodule MyappWeb.HomeLive do\n   use MyappWeb, :live_view\n-  use MyAppNative, :live_view\n+  use MyappNative, :live_view\n \n   # def(render(assigns)) do\n   #   ~H\"\"\"\n   #   <h1>Welcome to LiveView!</h1>\n"
+                },
+                {
+                    "date": 1737486239318,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n defmodule MyappWeb.HomeLive do\n   use MyappWeb, :live_view\n   use MyappNative, :live_view\n \n-  # def(render(assigns)) do\n-  #   ~H\"\"\"\n-  #   <h1>Welcome to LiveView!</h1>\n-  #   \"\"\"\n-  # end\n+  def(render(assigns)) do\n+    ~H\"\"\"\n+    <h1>Welcome to LiveView!</h1>\n+    \"\"\"\n+  end\n end\n"
+                },
+                {
+                    "date": 1737492561889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n defmodule MyappWeb.HomeLive do\n-  use MyappWeb, :live_view\n+  # use MyappWeb, :live_view\n   use MyappNative, :live_view\n \n   def(render(assigns)) do\n     ~H\"\"\"\n"
+                },
+                {
+                    "date": 1737492596469,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n defmodule MyappWeb.HomeLive do\n-  # use MyappWeb, :live_view\n+  use MyappWeb, :live_view\n   use MyappNative, :live_view\n \n   def(render(assigns)) do\n     ~H\"\"\"\n"
+                },
+                {
+                    "date": 1737502221622,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,88 @@\n-defmodule MyappWeb.HomeLive do\n+defmodule MyappWeb.MyappLive do\n   use MyappWeb, :live_view\n   use MyappNative, :live_view\n+  alias QRCode.Render.SvgSettings\n \n-  def(render(assigns)) do\n+  @featured_recipes [\"search\", \"card-row\", \"sectioned-grid\", \"gesture\"]\n+\n+  def handle_params(params, uri, socket) do\n+    uri = URI.parse(uri) |> Map.put(:query, nil) |> URI.to_string()\n+\n+    {:ok, qr} =\n+      uri\n+      |> QRCode.create(:high)\n+      |> QRCode.render(:svg, %SvgSettings{flatten: true})\n+      |> QRCode.to_base64()\n+\n+    {:noreply,\n+     socket\n+     |> assign(:qr, qr)\n+     |> assign(:uri, uri)}\n+  end\n+\n+  def mount(_params, _session, socket) do\n+    all_recipes = recipes(nil)\n+    categorized_recipes = Enum.group_by(all_recipes, & &1.metadata.category)\n+\n+    categories =\n+      categorized_recipes\n+      |> Map.keys()\n+      |> Enum.sort()\n+\n+    {:ok,\n+     socket\n+     |> assign(:recipes, all_recipes)\n+     |> assign(:selected_category, nil)\n+     |> assign(:categories, categories)\n+     |> assign(\n+       :featured_recipes,\n+       Enum.filter(all_recipes, &Enum.member?(@featured_recipes, Path.basename(&1.path)))\n+     )}\n+  end\n+\n+  def handle_event(\"clear-filter\", _params, socket) do\n+    handle_event(\"filter\", %{\"category\" => nil}, socket)\n+  end\n+\n+  def handle_event(\"filter\", %{\"category\" => category}, socket) do\n+    {:noreply,\n+     socket\n+     |> assign(:selected_category, category)\n+     |> assign(:recipes, recipes(category))}\n+  end\n+\n+  def recipes(nil) do\n+    Phoenix.Router.routes(MyappWeb.Router)\n+    |> Enum.filter(&String.starts_with?(&1.path, \"/recipes/\"))\n+  end\n+\n+  def recipes(category) do\n+    Phoenix.Router.routes(MyappWeb.Router)\n+    |> Enum.filter(\n+      &(String.starts_with?(&1.path, \"/recipes/\") and &1.metadata.category == category)\n+    )\n+  end\n+\n+  def render(assigns) do\n     ~H\"\"\"\n-    <h1>Welcome to LiveView!</h1>\n+    <div class=\"h-full flex flex-col gap-4 items-center\">\n+      <div class=\"flex-grow flex flex-col gap-4 items-center justify-center\">\n+        <p class=\"text-xl\">See all <%= length(@recipes) %> recipes on your iPhone</p>\n+        <.link\n+          href={\"https://appclip.apple.com/id?p=com.dockyard.LiveViewNativeGo.Clip&liveview=#{@uri}\"}\n+          class=\"rounded-lg bg-zinc-900 px-3 py-2 hover:bg-zinc-800/80 text-white\"\n+        >\n+          <.icon name=\"hero-rocket-launch-mini\" /> Open in <span class=\"font-semibold\">LVN Go</span>\n+        </.link>\n+      </div>\n+      <div class=\"w-full flex flex-grow flex-col gap-8 items-center justify-center border-zinc-200 border-t\">\n+        <p class=\"text-xl\">Already have <span class=\"font-semibold\">LVN Go</span>?</p>\n+        <img src={\"data:image/svg+xml; base64, #{@qr}\"} class=\"max-w-32 md:max-w-56\" />\n+        <p class=\"text-sm\">\n+          Scan the code with <span class=\"font-semibold\">LVN Go</span> to open the Myapp.\n+        </p>\n+      </div>\n+    </div>\n     \"\"\"\n   end\n end\n"
+                },
+                {
+                    "date": 1737502263703,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,88 +1,10 @@\n-defmodule MyappWeb.MyappLive do\n+defmodule MyappWeb.HomeLive do\n   use MyappWeb, :live_view\n   use MyappNative, :live_view\n-  alias QRCode.Render.SvgSettings\n \n-  @featured_recipes [\"search\", \"card-row\", \"sectioned-grid\", \"gesture\"]\n-\n-  def handle_params(params, uri, socket) do\n-    uri = URI.parse(uri) |> Map.put(:query, nil) |> URI.to_string()\n-\n-    {:ok, qr} =\n-      uri\n-      |> QRCode.create(:high)\n-      |> QRCode.render(:svg, %SvgSettings{flatten: true})\n-      |> QRCode.to_base64()\n-\n-    {:noreply,\n-     socket\n-     |> assign(:qr, qr)\n-     |> assign(:uri, uri)}\n-  end\n-\n-  def mount(_params, _session, socket) do\n-    all_recipes = recipes(nil)\n-    categorized_recipes = Enum.group_by(all_recipes, & &1.metadata.category)\n-\n-    categories =\n-      categorized_recipes\n-      |> Map.keys()\n-      |> Enum.sort()\n-\n-    {:ok,\n-     socket\n-     |> assign(:recipes, all_recipes)\n-     |> assign(:selected_category, nil)\n-     |> assign(:categories, categories)\n-     |> assign(\n-       :featured_recipes,\n-       Enum.filter(all_recipes, &Enum.member?(@featured_recipes, Path.basename(&1.path)))\n-     )}\n-  end\n-\n-  def handle_event(\"clear-filter\", _params, socket) do\n-    handle_event(\"filter\", %{\"category\" => nil}, socket)\n-  end\n-\n-  def handle_event(\"filter\", %{\"category\" => category}, socket) do\n-    {:noreply,\n-     socket\n-     |> assign(:selected_category, category)\n-     |> assign(:recipes, recipes(category))}\n-  end\n-\n-  def recipes(nil) do\n-    Phoenix.Router.routes(MyappWeb.Router)\n-    |> Enum.filter(&String.starts_with?(&1.path, \"/recipes/\"))\n-  end\n-\n-  def recipes(category) do\n-    Phoenix.Router.routes(MyappWeb.Router)\n-    |> Enum.filter(\n-      &(String.starts_with?(&1.path, \"/recipes/\") and &1.metadata.category == category)\n-    )\n-  end\n-\n-  def render(assigns) do\n+  def(render(assigns)) do\n     ~H\"\"\"\n-    <div class=\"h-full flex flex-col gap-4 items-center\">\n-      <div class=\"flex-grow flex flex-col gap-4 items-center justify-center\">\n-        <p class=\"text-xl\">See all <%= length(@recipes) %> recipes on your iPhone</p>\n-        <.link\n-          href={\"https://appclip.apple.com/id?p=com.dockyard.LiveViewNativeGo.Clip&liveview=#{@uri}\"}\n-          class=\"rounded-lg bg-zinc-900 px-3 py-2 hover:bg-zinc-800/80 text-white\"\n-        >\n-          <.icon name=\"hero-rocket-launch-mini\" /> Open in <span class=\"font-semibold\">LVN Go</span>\n-        </.link>\n-      </div>\n-      <div class=\"w-full flex flex-grow flex-col gap-8 items-center justify-center border-zinc-200 border-t\">\n-        <p class=\"text-xl\">Already have <span class=\"font-semibold\">LVN Go</span>?</p>\n-        <img src={\"data:image/svg+xml; base64, #{@qr}\"} class=\"max-w-32 md:max-w-56\" />\n-        <p class=\"text-sm\">\n-          Scan the code with <span class=\"font-semibold\">LVN Go</span> to open the Myapp.\n-        </p>\n-      </div>\n-    </div>\n+    <h1>Welcome to LiveView!</h1>\n     \"\"\"\n   end\n end\n"
+                }
+            ],
+            "date": 1737485715571,
+            "name": "Commit-0",
+            "content": "defmodule MyappWeb.HomeLive do\n  use MyappWeb, :live_view\n\n  def render(assigns) do\n    ~H\"\"\"\n    <h1>Welcome to LiveView!</h1>\n    \"\"\"\n  end\nend\n"
+        }
+    ]
+}
