@@ -1,10 +1,51 @@
 defmodule MyappWeb.HomeLive.SwiftUI do
   use MyappNative, [:render_component, format: :swiftui]
 
+  def render__(assigns, interface) do
+    target = Map.get(interface, "target", "ios")
+    assigns = assign(assigns, :target, target)
+    ~LVN"""
+    <VStack
+      alignment="leading"
+      style={[
+        "padding()",
+        ~s[background(Color(hue: attr("hue"), saturation: 0.75, brightness: 0.85), in: .rect(cornerRadius: 10, style: .continuous))],
+        "foregroundStyle(.white)",
+        "aspectRatio(1.777, contentMode: .fill)",
+      ]}
+      hue={@hue}
+    >
+    <VideoPlayer
+      autoplay
+      isMuted
+      url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+      playbackTime={30}
+      phx-debounce={1000}
+      phx-change="player-changed"
+    />
+    </VStack>
+    """
+end
+
   def render(assigns, interface) do
     target = Map.get(interface, "target", "ios")
     assigns = assign(assigns, :target, target)
     ~LVN"""
+    
+    
+    <VStack>
+    <Text>Hello world</Text>
+    <VideoPlayer
+      autoplay
+      isMuted
+      url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+      playbackTime={30}
+      phx-debounce={1000}
+      phx-change="player-changed"
+    />
+    </VStack>
+    
+    
     <List
       id="cookbook"
       style={[

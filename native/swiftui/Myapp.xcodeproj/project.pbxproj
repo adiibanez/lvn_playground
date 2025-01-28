@@ -8,6 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		0B4B2D96F52ABEE042F930AE /* ConnectingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD6D643C35F59A5D1FCC31 /* ConnectingView.swift */; };
+		0DFA7B2C2D4858F300E41B08 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B2B2D4858F300E41B08 /* BluetoothManager.swift */; };
+		0DFA7B2D2D4858F300E41B08 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B2B2D4858F300E41B08 /* BluetoothManager.swift */; };
+		0DFA7B312D48649800E41B08 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DFA7B302D48649800E41B08 /* Info.plist */; };
+		0DFA7B322D48649800E41B08 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DFA7B302D48649800E41B08 /* Info.plist */; };
+		0DFA7B342D48667400E41B08 /* BluetoothClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B332D48666B00E41B08 /* BluetoothClient.swift */; };
+		0DFA7B352D48667400E41B08 /* BluetoothClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B332D48666B00E41B08 /* BluetoothClient.swift */; };
+		0DFA7B3A2D486B8100E41B08 /* BLEClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B392D486B8100E41B08 /* BLEClient.swift */; };
+		0DFA7B3B2D486B8100E41B08 /* BLEClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B392D486B8100E41B08 /* BLEClient.swift */; };
+		0DFA7B3D2D486CD900E41B08 /* CustomEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B3C2D486CD400E41B08 /* CustomEnvironment.swift */; };
+		0DFA7B3E2D486CD900E41B08 /* CustomEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B3C2D486CD400E41B08 /* CustomEnvironment.swift */; };
+		0DFA7B402D48741A00E41B08 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B3F2D48741700E41B08 /* AppManager.swift */; };
+		0DFA7B412D48741A00E41B08 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B3F2D48741700E41B08 /* AppManager.swift */; };
 		15C8AD6945A92CE0F997AD78 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADFC0E0844AFDE455C761950 /* Preview Assets.xcassets */; };
 		18D2F456DD6A6E706A0ECC72 /* Myapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD637E0BA96F7610CBAC592 /* Myapp.swift */; };
 		1D2AC73DE6EE26581B10837F /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6ABB58F932639C7F7CCD7A /* ErrorView.swift */; };
@@ -30,6 +42,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0DFA7B2B2D4858F300E41B08 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
+		0DFA7B302D48649800E41B08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0DFA7B332D48666B00E41B08 /* BluetoothClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothClient.swift; sourceTree = "<group>"; };
+		0DFA7B392D486B8100E41B08 /* BLEClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEClient.swift; sourceTree = "<group>"; };
+		0DFA7B3C2D486CD400E41B08 /* CustomEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEnvironment.swift; sourceTree = "<group>"; };
+		0DFA7B3F2D48741700E41B08 /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		27271B7C0B95DACDDFD6BDD2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		38461B59116BB726D368BC4C /* DisconnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectedView.swift; sourceTree = "<group>"; };
 		3D26E200081582BDA3CA685E /* ReconnectingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectingView.swift; sourceTree = "<group>"; };
@@ -67,6 +85,11 @@
 		447CE5679AF08ACA909B338C /* Myapp */ = {
 			isa = PBXGroup;
 			children = (
+				0DFA7B3F2D48741700E41B08 /* AppManager.swift */,
+				0DFA7B3C2D486CD400E41B08 /* CustomEnvironment.swift */,
+				0DFA7B392D486B8100E41B08 /* BLEClient.swift */,
+				0DFA7B332D48666B00E41B08 /* BluetoothClient.swift */,
+				0DFA7B302D48649800E41B08 /* Info.plist */,
 				4E972F4A6DBF6548A636DAEA /* Preview Content */,
 				27271B7C0B95DACDDFD6BDD2 /* Assets.xcassets */,
 				E1CD6D643C35F59A5D1FCC31 /* ConnectingView.swift */,
@@ -75,6 +98,7 @@
 				5B6ABB58F932639C7F7CCD7A /* ErrorView.swift */,
 				5FD637E0BA96F7610CBAC592 /* Myapp.swift */,
 				3D26E200081582BDA3CA685E /* ReconnectingView.swift */,
+				0DFA7B2B2D4858F300E41B08 /* BluetoothManager.swift */,
 			);
 			path = Myapp;
 			sourceTree = "<group>";
@@ -187,6 +211,7 @@
 			files = (
 				CB9D325C0BB854E47E2FAA59 /* Assets.xcassets in Resources */,
 				15C8AD6945A92CE0F997AD78 /* Preview Assets.xcassets in Resources */,
+				0DFA7B312D48649800E41B08 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,6 +221,7 @@
 			files = (
 				8EDCB8A31102CC895E530B2B /* Assets.xcassets in Resources */,
 				53061756E5397EC69B34FCC2 /* Preview Assets.xcassets in Resources */,
+				0DFA7B322D48649800E41B08 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,9 +234,14 @@
 			files = (
 				ADACB4928417C9EF5F110369 /* ConnectingView.swift in Sources */,
 				A319D3E76E917990C75AEDEB /* ContentView.swift in Sources */,
+				0DFA7B3A2D486B8100E41B08 /* BLEClient.swift in Sources */,
 				E975345F106B98E9321F9804 /* DisconnectedView.swift in Sources */,
+				0DFA7B2D2D4858F300E41B08 /* BluetoothManager.swift in Sources */,
 				1D2AC73DE6EE26581B10837F /* ErrorView.swift in Sources */,
+				0DFA7B342D48667400E41B08 /* BluetoothClient.swift in Sources */,
+				0DFA7B402D48741A00E41B08 /* AppManager.swift in Sources */,
 				18D2F456DD6A6E706A0ECC72 /* Myapp.swift in Sources */,
+				0DFA7B3E2D486CD900E41B08 /* CustomEnvironment.swift in Sources */,
 				E0BD4F368D065EEF9AD4C0E2 /* ReconnectingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -221,9 +252,14 @@
 			files = (
 				0B4B2D96F52ABEE042F930AE /* ConnectingView.swift in Sources */,
 				681EE611E60B07B619F971C8 /* ContentView.swift in Sources */,
+				0DFA7B3B2D486B8100E41B08 /* BLEClient.swift in Sources */,
 				AC110A1EC6D0E9309AA3B288 /* DisconnectedView.swift in Sources */,
+				0DFA7B2C2D4858F300E41B08 /* BluetoothManager.swift in Sources */,
 				6CFC3CB2A5DAABD8B0B2C6DB /* ErrorView.swift in Sources */,
+				0DFA7B352D48667400E41B08 /* BluetoothClient.swift in Sources */,
+				0DFA7B412D48741A00E41B08 /* AppManager.swift in Sources */,
 				3EE2EA31FF8F4DD8D0A923D0 /* Myapp.swift in Sources */,
+				0DFA7B3D2D486CD900E41B08 /* CustomEnvironment.swift in Sources */,
 				33B74C5008A98BED1403D7B7 /* ReconnectingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -235,12 +271,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F9B558A68A;
+				INFOPLIST_FILE = Myapp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Myapp;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.example.Myapp;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
@@ -248,8 +282,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.chatmangpt.Myapp;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.Myapp;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator appletvos appletvsimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
@@ -264,11 +297,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=macosx*]" = F9B558A68A;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				INFOPLIST_FILE = Myapp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Myapp;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.example.Myapp;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
@@ -276,9 +307,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.chatmangpt.Myapp;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.Myapp;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator appletvos appletvsimulator macosx";
 				SUPPORTS_MACCATALYST = NO;

@@ -6,8 +6,10 @@ import Combine
 import CoreBluetooth
 
 struct ContentView: View {
-    @EnvironmentObject var bleManager: BluetoothManager
-    @State private var messageFromBle: String = "No Message"
+    //@EnvironmentObject var bleManager: BluetoothManager
+    //@State private var messageFromBle: String = "No Message"
+    
+    @StateObject var appManager = AppManager.shared
 //    @Environment(\.liveViewNativeBridge) private var bridge
 
     var body: some View {
@@ -28,13 +30,13 @@ struct ContentView: View {
         } error: { error in
             ErrorView(error: error)
         }
-        .environment(\.customEnvironment, CustomEnvironment(bleManager: bleManager, sendMessage: sendMessageToLV) )
-        .onAppear {
-             self.bleManager.sendData = { data in
-              self.messageFromBle = data
-                  self.sendMessageToLV(data: data)
-           }
-        }
+        //.environment(\.customEnvironment, CustomEnvironment(bleManager: bleManager, sendMessage: sendMessageToLV) )
+        //.onAppear {
+        //     self.bleManager.sendData = { data in
+        //      self.messageFromBle = data
+        //          self.sendMessageToLV(data: data)
+        //   }
+        //}
     }
 
   func sendMessageToLV(data: String) {
