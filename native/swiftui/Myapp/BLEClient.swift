@@ -80,19 +80,13 @@ struct BLEClient<Root: RootRegistry>: View {
                     target: $liveElement.element.attributeValue(for: "phx-target").flatMap(Int.init)
                 )
             }
+            //}.onReceive($liveElement.context.coordinator.receiveEvent("ble-command")) { (payload: Dictionary<String, Any>
+        }.onReceive($liveElement.context.coordinator.receiveEvent("ble-command")) { (payload: [String: Any]) in
+            print("Testlitest")
         }
         
         // setup
         .task {
-            
-            //$liveElement.context.coordinator.handleEvent("ble-command") { (payload: Any) in
-             //   print("Hello ... ble-command")
-            //}
-            // payload: Dictionary<String, Any>
-            $liveElement.context.coordinator.handleEvent("ble-command") { (payload: [String: Any]) in
-              print("Testlitest")
-            }
-        
             coordinator.centralManager.delegate = coordinator
         }
     }
@@ -104,7 +98,7 @@ struct BLEClient<Root: RootRegistry>: View {
         
         override init() {
             super.init()
-        
+            
         }
         
         func startScan(){

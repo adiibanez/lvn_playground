@@ -1,0 +1,6 @@
+== Compilation error in file lib/myapp_web/components/core_components.swiftui.ex ==
+** (CompileError) lib/myapp_web/components/core_components.swiftui.ex:49: cannot declare attributes for function input/1. Components must be functions with arity 2
+    (live_view_native 0.4.0-rc.0) lib/live_view_native/component/declarative.ex:556: LiveViewNative.Component.Declarative.compile_error!/3
+    (live_view_native 0.4.0-rc.0) lib/live_view_native/component/declarative.ex:586: LiveViewNative.Component.Declarative.__on_definition__/6
+    lib/myapp_web/components/core_components.swiftui.ex:83: (module)
+adrianibanez@Adrians-MBP myapp % ls lib/live_view_native/component/declarative.ex

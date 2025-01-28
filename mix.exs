@@ -62,7 +62,7 @@ defmodule Myapp.MixProject do
       {:live_view_native_stylesheet, "~> 0.3.2"},
       {:live_view_native_swiftui, "~> 0.4.0-rc.0"},
       {:live_view_native_live_form, "~> 0.4.0-rc.0"},
-            {:qr_code, "~> 3.1.0"}
+      {:qr_code, "~> 3.1.0"}
     ]
   end
 
