@@ -1,6 +1,10 @@
 defmodule MyappWeb.HomeLive.SwiftUI do
   use MyappNative, [:render_component, format: :swiftui]
 
+  def mount(_params, _session, socket) do
+    {:ok, socket}
+  end
+
   def render(assigns, interface) do
     target = Map.get(interface, "target", "ios")
     assigns = assign(assigns, :target, target)
@@ -9,7 +13,37 @@ defmodule MyappWeb.HomeLive.SwiftUI do
     <VStack
             alignment="leading"
             >
-        <BLEClient scanForPeripherals="true"></BLEClient>
+            <Box size="fill" background="system-blue">
+                  <Text align="Center">
+                        second_page
+                    <Link destination="/nav/next">
+                         <Text class="bold">Next</Text>
+                    </Link>
+                  </Text>
+                </Box>
+
+                <Button
+              phx-click="send-ble-command"
+              phx-value-test2={1}
+            >Send cm ( outside BLEClient ) </Button>
+
+
+        <BLEClient phx-scan-devices="{assigns.ble_scan}">
+
+        <Text>{assigns.ble_scan}</Text>
+          <Button
+              phx-click="toggle-scan"
+              phx-value-test={1}
+            >Scan</Button>
+
+
+            <Button
+              phx-click="send-ble-command"
+              phx-value-test2={1}
+            >Send cmd</Button>
+
+
+        </BLEClient>
           <VideoPlayer
               autoplay
               isMuted

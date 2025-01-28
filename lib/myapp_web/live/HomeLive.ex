@@ -4,7 +4,6 @@ defmodule MyappWeb.HomeLive do
   alias QRCode.Render.SvgSettings
   require Logger
 
-
   @featured_recipes ["search", "card-row", "sectioned-grid", "gesture"]
 
   def handle_params(params, uri, socket) do
@@ -33,6 +32,7 @@ defmodule MyappWeb.HomeLive do
 
     {:ok,
      socket
+     |> assign(:ble_scan, false)
      |> assign(:recipes, all_recipes)
      |> assign(:selected_category, nil)
      |> assign(:categories, categories)
@@ -41,15 +41,39 @@ defmodule MyappWeb.HomeLive do
        Enum.filter(all_recipes, &Enum.member?(@featured_recipes, Path.basename(&1.path)))
      )}
   end
-  
-  
-  
-  # %{"timeControlStatus" => "waitingToPlayAtSpecifiedRate", "isMuted" => false} = 
-  def handle_event("player-changed", params, socket ) do
+
+  def handle_event("test-event2", %{"onTapGesture" => true}, socket) do
+    Logger.debug("Tap gesture")
+    {:no_reply, socket}
+  end
+
+  def handle_event("send-ble-command", params, socket) do
+    # Doesn't work resp. Unhandled event: EventPayload(event: LiveViewNativeCore.Event.phoenix ...
+    # {:no_reply,
+    #  socket
+    #  |> push_event("ble-command", %{"test" => "1"})}
+
+    # "Works" resp doesn't trigger any event handlers
+    {:noreply,
+     socket
+     |> push_event("ble-command", params)}
+
+    #  |> push_event("ble-command", "string_only")}
+  end
+
+  def handle_event("toggle-scan", %{"test" => "1"}, socket) do
+    Logger.debug("Toggle-scan")
+
+    {:noreply,
+     socket
+     |> assign(ble_scan: !socket.assigns.ble_scan)}
+  end
+
+  # %{"timeControlStatus" => "waitingToPlayAtSpecifiedRate", "isMuted" => false} =
+  def handle_event("player-changed", params, socket) do
     Logger.debug("AVKit Player changed #{inspect(params)}")
     {:noreply, socket}
   end
-  
 
   def handle_event("clear-filter", _params, socket) do
     handle_event("filter", %{"category" => nil}, socket)
@@ -78,7 +102,7 @@ defmodule MyappWeb.HomeLive do
     ~H"""
     <div class="h-full flex flex-col gap-4 items-center">
       <div class="flex-grow flex flex-col gap-4 items-center justify-center">
-        <p class="text-xl">See all <%= length(@recipes) %> recipes on your iPhone</p>
+        <p class="text-xl">See all {length(@recipes)} recipes on your iPhone</p>
         <.link
           href={"https://appclip.apple.com/id?p=com.dockyard.LiveViewNativeGo.Clip&liveview=#{@uri}"}
           class="rounded-lg bg-zinc-900 px-3 py-2 hover:bg-zinc-800/80 text-white"
