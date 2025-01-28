@@ -2,6 +2,7 @@ defmodule MyappWeb.HomeLive do
   use MyappWeb, :live_view
   use MyappNative, :live_view
   alias QRCode.Render.SvgSettings
+  require Logger
 
 
   @featured_recipes ["search", "card-row", "sectioned-grid", "gesture"]
@@ -40,6 +41,15 @@ defmodule MyappWeb.HomeLive do
        Enum.filter(all_recipes, &Enum.member?(@featured_recipes, Path.basename(&1.path)))
      )}
   end
+  
+  
+  
+  # %{"timeControlStatus" => "waitingToPlayAtSpecifiedRate", "isMuted" => false} = 
+  def handle_event("player-changed", params, socket ) do
+    Logger.debug("AVKit Player changed #{inspect(params)}")
+    {:noreply, socket}
+  end
+  
 
   def handle_event("clear-filter", _params, socket) do
     handle_event("filter", %{"category" => nil}, socket)

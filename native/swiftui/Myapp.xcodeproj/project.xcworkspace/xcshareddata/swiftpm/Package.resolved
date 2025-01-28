@@ -1,5 +1,5 @@
 {
-  "originHash" : "40c624742c4911f585713dd301d0014dd51b190950943fd955b350b4e452df97",
+  "originHash" : "e08743673cc3da6be0f2ea262cf698d96a48c5f8edbb9f4742f2efe4e34cd07b",
   "pins" : [
     {
       "identity" : "liveview-client-swiftui",
@@ -26,6 +26,15 @@
       "state" : {
         "revision" : "9e61b02906353bac563bf842f8ca8ab8441117d0",
         "version" : "0.4.0-rc.0"
+      }
+    },
+    {
+      "identity" : "liveview-native-swiftui-avkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/liveview-native/liveview-native-swiftui-avkit",
+      "state" : {
+        "revision" : "964c46d3a225d8822a196614e6317f7341445647",
+        "version" : "0.3.0"
       }
     },
     {

@@ -20,6 +20,9 @@
 		0DFA7B3E2D486CD900E41B08 /* CustomEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B3C2D486CD400E41B08 /* CustomEnvironment.swift */; };
 		0DFA7B402D48741A00E41B08 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B3F2D48741700E41B08 /* AppManager.swift */; };
 		0DFA7B412D48741A00E41B08 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B3F2D48741700E41B08 /* AppManager.swift */; };
+		0DFA7B4D2D48832F00E41B08 /* LiveViewNativeAVKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFA7B4C2D48832F00E41B08 /* LiveViewNativeAVKit */; };
+		0DFA7B4F2D48917300E41B08 /* BLEClientRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B4E2D48916E00E41B08 /* BLEClientRegistry.swift */; };
+		0DFA7B502D48917300E41B08 /* BLEClientRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B4E2D48916E00E41B08 /* BLEClientRegistry.swift */; };
 		15C8AD6945A92CE0F997AD78 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADFC0E0844AFDE455C761950 /* Preview Assets.xcassets */; };
 		18D2F456DD6A6E706A0ECC72 /* Myapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD637E0BA96F7610CBAC592 /* Myapp.swift */; };
 		1D2AC73DE6EE26581B10837F /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6ABB58F932639C7F7CCD7A /* ErrorView.swift */; };
@@ -48,6 +51,7 @@
 		0DFA7B392D486B8100E41B08 /* BLEClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEClient.swift; sourceTree = "<group>"; };
 		0DFA7B3C2D486CD400E41B08 /* CustomEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEnvironment.swift; sourceTree = "<group>"; };
 		0DFA7B3F2D48741700E41B08 /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
+		0DFA7B4E2D48916E00E41B08 /* BLEClientRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEClientRegistry.swift; sourceTree = "<group>"; };
 		27271B7C0B95DACDDFD6BDD2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		38461B59116BB726D368BC4C /* DisconnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectedView.swift; sourceTree = "<group>"; };
 		3D26E200081582BDA3CA685E /* ReconnectingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectingView.swift; sourceTree = "<group>"; };
@@ -67,6 +71,7 @@
 			files = (
 				44C747CE5AD830043ADEF9CF /* LiveViewNative in Frameworks */,
 				D78D349A9D8E96EF4642D37B /* LiveViewNativeLiveForm in Frameworks */,
+				0DFA7B4D2D48832F00E41B08 /* LiveViewNativeAVKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +90,7 @@
 		447CE5679AF08ACA909B338C /* Myapp */ = {
 			isa = PBXGroup;
 			children = (
+				0DFA7B4E2D48916E00E41B08 /* BLEClientRegistry.swift */,
 				0DFA7B3F2D48741700E41B08 /* AppManager.swift */,
 				0DFA7B3C2D486CD400E41B08 /* CustomEnvironment.swift */,
 				0DFA7B392D486B8100E41B08 /* BLEClient.swift */,
@@ -168,6 +174,7 @@
 			packageProductDependencies = (
 				FD26833AE4774D96E5857436 /* LiveViewNative */,
 				49580280BC4299B4AFAAE1B7 /* LiveViewNativeLiveForm */,
+				0DFA7B4C2D48832F00E41B08 /* LiveViewNativeAVKit */,
 			);
 			productName = Myapp;
 			productReference = 7F4E86EAA4283020A4BEC80E /* Myapp.app */;
@@ -194,6 +201,7 @@
 			packageReferences = (
 				27D7DE1F75438D6B504F11B8 /* XCRemoteSwiftPackageReference "liveview-client-swiftui" */,
 				90C0BC769CDBC2FE9E2AE4D1 /* XCRemoteSwiftPackageReference "liveview-native-live-form" */,
+				0DFA7B482D487C6E00E41B08 /* XCRemoteSwiftPackageReference "liveview-native-swiftui-avkit" */,
 			);
 			projectDirPath = "";
 			projectRoot = "";
@@ -233,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADACB4928417C9EF5F110369 /* ConnectingView.swift in Sources */,
+				0DFA7B4F2D48917300E41B08 /* BLEClientRegistry.swift in Sources */,
 				A319D3E76E917990C75AEDEB /* ContentView.swift in Sources */,
 				0DFA7B3A2D486B8100E41B08 /* BLEClient.swift in Sources */,
 				E975345F106B98E9321F9804 /* DisconnectedView.swift in Sources */,
@@ -251,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B4B2D96F52ABEE042F930AE /* ConnectingView.swift in Sources */,
+				0DFA7B502D48917300E41B08 /* BLEClientRegistry.swift in Sources */,
 				681EE611E60B07B619F971C8 /* ContentView.swift in Sources */,
 				0DFA7B3B2D486B8100E41B08 /* BLEClient.swift in Sources */,
 				AC110A1EC6D0E9309AA3B288 /* DisconnectedView.swift in Sources */,
@@ -515,6 +525,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0DFA7B482D487C6E00E41B08 /* XCRemoteSwiftPackageReference "liveview-native-swiftui-avkit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/liveview-native/liveview-native-swiftui-avkit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.0;
+			};
+		};
 		27D7DE1F75438D6B504F11B8 /* XCRemoteSwiftPackageReference "liveview-client-swiftui" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/liveview-native/liveview-client-swiftui";
@@ -534,6 +552,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0DFA7B4C2D48832F00E41B08 /* LiveViewNativeAVKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0DFA7B482D487C6E00E41B08 /* XCRemoteSwiftPackageReference "liveview-native-swiftui-avkit" */;
+			productName = LiveViewNativeAVKit;
+		};
 		1AA71FF89DE270A54116BBE7 /* LiveViewNativeLiveForm */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 90C0BC769CDBC2FE9E2AE4D1 /* XCRemoteSwiftPackageReference "liveview-native-live-form" */;

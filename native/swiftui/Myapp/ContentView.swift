@@ -4,12 +4,14 @@ import LiveViewNativeLiveForm
 import LiveViewNativeCore
 import Combine
 import CoreBluetooth
+import LiveViewNativeAVKit
+
 
 struct ContentView: View {
     //@EnvironmentObject var bleManager: BluetoothManager
     //@State private var messageFromBle: String = "No Message"
     
-    @StateObject var appManager = AppManager.shared
+    //@StateObject var appManager = AppManager.shared
 //    @Environment(\.liveViewNativeBridge) private var bridge
 
     var body: some View {
@@ -18,7 +20,7 @@ struct ContentView: View {
                 development: .localhost(path: "/"),
                 production: URL(string: "https://example.com")!
             ),
-           addons: [.liveForm]
+            addons: [.liveForm, .avKit, .ble] // , .avKit
         ) {
             ConnectingView()
         } disconnected: {
@@ -38,9 +40,4 @@ struct ContentView: View {
         //   }
         //}
     }
-
-  func sendMessageToLV(data: String) {
-    // Send BLE data to LiveView server
- //     bridge?.sendEvent("ble_data", payload: ["data": data])
-  }
 }
