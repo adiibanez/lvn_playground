@@ -1,4 +1,5 @@
 import SwiftUI
+import Foundation
 import Combine
 import LiveViewNative
 import CoreBluetooth
@@ -16,45 +17,53 @@ import LiveViewNativeCoreFFI
 struct BLEClient<Root: RootRegistry>: View {
     @LiveElementIgnored
     @StateObject private var coordinator = BLEClientCoordinator()
-    
-    
-    
-    
+
     @_documentation(visibility: public)
     @LiveAttribute(.init(name: "phx-scan-devices"))
     private var scanForPeripherals: Bool = false
     
-    /// A boolean indicating whether the client should stop scanning for peripherals.
-    @_documentation(visibility: public)
-    private var stopScan: Bool = false
-    
     var body: some View {
         
         VStack() {
-            Text("Hello BLE")// Start with an actual view
+            Text("Hello BLE")
+            List {
+                Text("List of devices ...")
+               ForEach(coordinator.peripheralDisplayData) { peripheral in
+                  Text("Peripheral: \(peripheral.name), RSSI: \(peripheral.rssi), Status: \(peripheralStateString(state: peripheral.state))")
+               }
+            }
             $liveElement.children()
         }
         // remote changes
-        .onChange(of: scanForPeripherals) { newValue in
-            
-            print("scanForPeripherals 1 ... ")
-            if newValue {
-                print("scanForPeripherals 2 ... ")
+        .onChange(of: scanForPeripherals) {
+            if scanForPeripherals == true {
+                print("scanForPeripherals true ")
                 coordinator.startScan()
             }
-        }
-        .onChange(of: stopScan) {newValue in
-            if newValue{
+            
+            if scanForPeripherals == false {
+                print("scanForPeripherals false ")
                 coordinator.stopScan()
+            }
+        }
+        .onChange(of: coordinator.dataUpdate) {
+            
+            print("Data update: " + coordinator.dataUpdate)
+            Task {
+                try await $liveElement.context.coordinator.pushEvent(
+                    type: "click",
+                    event: "ble-response",
+                    value: ["response": coordinator.dataUpdate],
+                    target: $liveElement.element.attributeValue(for: "phx-target").flatMap(Int.init)
+                )
             }
         }
         .onChange(of: coordinator.centralManager.isScanning) {
             Task {
-                // send a change event without automatic debouncing, the observer handles the debounce instead.
                 try await $liveElement.context.coordinator.pushEvent(
                     type: "click",
                     event: "test-event",
-                    value: ["is_scanning": true],
+                    value: ["is_scanning": coordinator.centralManager.isScanning],
                     target: $liveElement.element.attributeValue(for: "phx-target").flatMap(Int.init)
                 )
             }
@@ -80,7 +89,6 @@ struct BLEClient<Root: RootRegistry>: View {
                     target: $liveElement.element.attributeValue(for: "phx-target").flatMap(Int.init)
                 )
             }
-            //}.onReceive($liveElement.context.coordinator.receiveEvent("ble-command")) { (payload: Dictionary<String, Any>
         }.onReceive($liveElement.context.coordinator.receiveEvent("ble-command")) { (payload: [String: Any]) in
             print("Testlitest")
         }
@@ -89,52 +97,23 @@ struct BLEClient<Root: RootRegistry>: View {
         .task {
             coordinator.centralManager.delegate = coordinator
         }
+        .task{
+            coordinator.updatePeripheralDisplayData()
+        }
     }
-    
-    /// An observer for a `BLEClient` that manages the `CBCentralManager` instance
-    final class BLEClientCoordinator: NSObject, ObservableObject, CBCentralManagerDelegate {
-        
-        let centralManager: CBCentralManager = .init()
-        
-        override init() {
-            super.init()
-            
-        }
-        
-        func startScan(){
-            centralManager.scanForPeripherals(withServices: nil)
-        }
-        
-        func stopScan(){
-            centralManager.stopScan()
-        }
-        
-        
-        // MARK: - CBCentralManagerDelegate
-        
-        func centralManagerDidUpdateState(_ central: CBCentralManager) {
-            switch central.state {
-            case .poweredOn:
-                print("Bluetooth is powered on")
-            case .poweredOff:
-                print("Bluetooth is powered off")
-            case .resetting:
-                print("Bluetooth is resetting")
-            case .unauthorized:
-                print("Bluetooth is unauthorized")
-            case .unsupported:
-                print("Bluetooth is unsupported")
-            case .unknown:
-                print("Bluetooth is in an unknown state")
-            @unknown default:
-                print("Bluetooth is in an unknown state")
-            }
-            
-        }
-        
-        func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-            print("Discovered peripheral: \(peripheral.name ?? "Unnamed"), RSSI: \(RSSI)")
-        }
-        
-    }
+  
+    func peripheralStateString(state: CBPeripheralState) -> String {
+           switch state {
+           case .disconnected:
+              return "Disconnected"
+           case .disconnecting:
+               return "Disconnecting"
+           case .connected:
+               return "Connected"
+           case .connecting:
+               return "Connecting"
+           default:
+               return "..."
+           }
+       }
 }

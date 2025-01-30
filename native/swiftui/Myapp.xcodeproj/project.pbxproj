@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0B4B2D96F52ABEE042F930AE /* ConnectingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD6D643C35F59A5D1FCC31 /* ConnectingView.swift */; };
+		0DE859822D4A7BB90026555B /* BluetoothUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859812D4A7BB40026555B /* BluetoothUtils.swift */; };
+		0DE859832D4A7BB90026555B /* BluetoothUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859812D4A7BB40026555B /* BluetoothUtils.swift */; };
+		0DE859852D4B89770026555B /* BLECoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859842D4B89730026555B /* BLECoordinator.swift */; };
+		0DE859862D4B89770026555B /* BLECoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859842D4B89730026555B /* BLECoordinator.swift */; };
+		0DE859882D4B8A2E0026555B /* CharacteristicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859872D4B8A2A0026555B /* CharacteristicView.swift */; };
+		0DE859892D4B8A2E0026555B /* CharacteristicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859872D4B8A2A0026555B /* CharacteristicView.swift */; };
 		0DFA7B2C2D4858F300E41B08 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B2B2D4858F300E41B08 /* BluetoothManager.swift */; };
 		0DFA7B2D2D4858F300E41B08 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B2B2D4858F300E41B08 /* BluetoothManager.swift */; };
 		0DFA7B312D48649800E41B08 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DFA7B302D48649800E41B08 /* Info.plist */; };
@@ -45,6 +51,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0DE859812D4A7BB40026555B /* BluetoothUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothUtils.swift; sourceTree = "<group>"; };
+		0DE859842D4B89730026555B /* BLECoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECoordinator.swift; sourceTree = "<group>"; };
+		0DE859872D4B8A2A0026555B /* CharacteristicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacteristicView.swift; sourceTree = "<group>"; };
 		0DFA7B2B2D4858F300E41B08 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		0DFA7B302D48649800E41B08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0DFA7B332D48666B00E41B08 /* BluetoothClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothClient.swift; sourceTree = "<group>"; };
@@ -90,6 +99,9 @@
 		447CE5679AF08ACA909B338C /* Myapp */ = {
 			isa = PBXGroup;
 			children = (
+				0DE859872D4B8A2A0026555B /* CharacteristicView.swift */,
+				0DE859842D4B89730026555B /* BLECoordinator.swift */,
+				0DE859812D4A7BB40026555B /* BluetoothUtils.swift */,
 				0DFA7B4E2D48916E00E41B08 /* BLEClientRegistry.swift */,
 				0DFA7B3F2D48741700E41B08 /* AppManager.swift */,
 				0DFA7B3C2D486CD400E41B08 /* CustomEnvironment.swift */,
@@ -242,6 +254,8 @@
 			files = (
 				ADACB4928417C9EF5F110369 /* ConnectingView.swift in Sources */,
 				0DFA7B4F2D48917300E41B08 /* BLEClientRegistry.swift in Sources */,
+				0DE859852D4B89770026555B /* BLECoordinator.swift in Sources */,
+				0DE859882D4B8A2E0026555B /* CharacteristicView.swift in Sources */,
 				A319D3E76E917990C75AEDEB /* ContentView.swift in Sources */,
 				0DFA7B3A2D486B8100E41B08 /* BLEClient.swift in Sources */,
 				E975345F106B98E9321F9804 /* DisconnectedView.swift in Sources */,
@@ -252,6 +266,7 @@
 				18D2F456DD6A6E706A0ECC72 /* Myapp.swift in Sources */,
 				0DFA7B3E2D486CD900E41B08 /* CustomEnvironment.swift in Sources */,
 				E0BD4F368D065EEF9AD4C0E2 /* ReconnectingView.swift in Sources */,
+				0DE859822D4A7BB90026555B /* BluetoothUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +276,8 @@
 			files = (
 				0B4B2D96F52ABEE042F930AE /* ConnectingView.swift in Sources */,
 				0DFA7B502D48917300E41B08 /* BLEClientRegistry.swift in Sources */,
+				0DE859862D4B89770026555B /* BLECoordinator.swift in Sources */,
+				0DE859892D4B8A2E0026555B /* CharacteristicView.swift in Sources */,
 				681EE611E60B07B619F971C8 /* ContentView.swift in Sources */,
 				0DFA7B3B2D486B8100E41B08 /* BLEClient.swift in Sources */,
 				AC110A1EC6D0E9309AA3B288 /* DisconnectedView.swift in Sources */,
@@ -271,6 +288,7 @@
 				3EE2EA31FF8F4DD8D0A923D0 /* Myapp.swift in Sources */,
 				0DFA7B3D2D486CD900E41B08 /* CustomEnvironment.swift in Sources */,
 				33B74C5008A98BED1403D7B7 /* ReconnectingView.swift in Sources */,
+				0DE859832D4A7BB90026555B /* BluetoothUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

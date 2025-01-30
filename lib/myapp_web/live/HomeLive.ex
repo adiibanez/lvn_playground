@@ -42,14 +42,19 @@ defmodule MyappWeb.HomeLive do
      )}
   end
 
-  def handle_event("test-event2", %{"onTapGesture" => true}, socket) do
-    Logger.debug("Tap gesture")
-    {:no_reply, socket}
+  def handle_event("test-event", params, socket) do
+    Logger.debug("Test-event #{inspect(params)}")
+    {:noreply, socket}
+  end
+
+  def handle_event("test-event2", params, socket) do
+    Logger.debug("Gesture #{inspect(params)}")
+    {:noreply, socket}
   end
 
   def handle_event("send-ble-command", params, socket) do
     # Doesn't work resp. Unhandled event: EventPayload(event: LiveViewNativeCore.Event.phoenix ...
-    # {:no_reply,
+    # {:noreply,
     #  socket
     #  |> push_event("ble-command", %{"test" => "1"})}
 
@@ -61,12 +66,17 @@ defmodule MyappWeb.HomeLive do
     #  |> push_event("ble-command", "string_only")}
   end
 
-  def handle_event("toggle-scan", %{"test" => "1"}, socket) do
-    Logger.debug("Toggle-scan")
+  def handle_event("toggle-scan", params, socket) do
+    Logger.debug("Toggle-scan #{inspect(params)}")
 
     {:noreply,
      socket
      |> assign(ble_scan: !socket.assigns.ble_scan)}
+  end
+
+  def handle_event("ble-response", params, socket) do
+    Logger.debug("ble-response #{inspect(params)}")
+    {:noreply, socket}
   end
 
   # %{"timeControlStatus" => "waitingToPlayAtSpecifiedRate", "isMuted" => false} =
@@ -77,6 +87,7 @@ defmodule MyappWeb.HomeLive do
 
   def handle_event("clear-filter", _params, socket) do
     handle_event("filter", %{"category" => nil}, socket)
+    {:noreply, socket}
   end
 
   def handle_event("filter", %{"category" => category}, socket) do

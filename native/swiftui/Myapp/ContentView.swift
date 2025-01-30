@@ -17,7 +17,7 @@ struct ContentView: View {
     var body: some View {
         #LiveView(
             .automatic(
-                development: .localhost(path: "/"),
+                development: .localhost(port:4002, path: "/"),
                 production: URL(string: "https://example.com")!
             ),
             addons: [.liveForm, .avKit, .ble] // , .avKit
