@@ -6,7 +6,7 @@ defmodule MyappWeb.HomeLive do
 
   @featured_recipes ["search", "card-row", "sectioned-grid", "gesture"]
 
-  def handle_params(params, uri, socket) do
+  def handle_params(_params, uri, socket) do
     uri = URI.parse(uri) |> Map.put(:query, nil) |> URI.to_string()
 
     {:ok, qr} =

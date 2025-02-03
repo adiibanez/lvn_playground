@@ -21,18 +21,28 @@ struct BLEClient<Root: RootRegistry>: View {
     @_documentation(visibility: public)
     @LiveAttribute(.init(name: "phx-scan-devices"))
     private var scanForPeripherals: Bool = false
-    
+
+      @State private var isConnecting = false
+
     var body: some View {
-        
-        VStack() {
+        NavigationView { // Added NavigationView
+          VStack() {
             Text("Hello BLE")
-            List {
-                Text("List of devices ...")
-               ForEach(coordinator.peripheralDisplayData) { peripheral in
-                  Text("Peripheral: \(peripheral.name), RSSI: \(peripheral.rssi), Status: \(peripheralStateString(state: peripheral.state))")
-               }
-            }
-            $liveElement.children()
+                List {
+                   Text("List of devices ...")
+                       ForEach(coordinator.peripheralDisplayData) { peripheral in
+                           Text("Peripheral: \(peripheral.name), RSSI: \(peripheral.rssi), Status: \(peripheralStateString(state: peripheral.state))")
+                           
+                           /*NavigationLink {
+                               CharacteristicsView(peripheral: discoveredPeripherals(peripheralId: peripheral.id)!, coordinator: coordinator, isConnecting: $isConnecting) // Navigate to CharacteristicsView
+                           } label: {
+                               Text("Peripheral: \(peripheral.name), RSSI: \(peripheral.rssi), Status: \(peripheralStateString(state: peripheral.state))")
+                            }*/
+                        }
+                    }
+                $liveElement.children()
+              }
+          .navigationTitle("Discovered Devices") // Added navigation title
         }
         // remote changes
         .onChange(of: scanForPeripherals) {
@@ -98,10 +108,14 @@ struct BLEClient<Root: RootRegistry>: View {
             coordinator.centralManager.delegate = coordinator
         }
         .task{
-            coordinator.updatePeripheralDisplayData()
+           coordinator.updatePeripheralDisplayData()
         }
     }
-  
+    
+   func discoveredPeripherals(peripheralId: UUID) -> CBPeripheral?{
+        return coordinator.discoveredPeripherals[peripheralId]
+    }
+    
     func peripheralStateString(state: CBPeripheralState) -> String {
            switch state {
            case .disconnected:
