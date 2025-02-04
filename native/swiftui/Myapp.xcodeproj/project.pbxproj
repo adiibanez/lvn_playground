@@ -214,6 +214,7 @@
 				27D7DE1F75438D6B504F11B8 /* XCRemoteSwiftPackageReference "liveview-client-swiftui" */,
 				90C0BC769CDBC2FE9E2AE4D1 /* XCRemoteSwiftPackageReference "liveview-native-live-form" */,
 				0DFA7B482D487C6E00E41B08 /* XCRemoteSwiftPackageReference "liveview-native-swiftui-avkit" */,
+				0DC76A7B2D5139F3002860D5 /* XCRemoteSwiftPackageReference "liveview-native-swiftui-realitykit" */,
 			);
 			projectDirPath = "";
 			projectRoot = "";
@@ -543,6 +544,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0DC76A7B2D5139F3002860D5 /* XCRemoteSwiftPackageReference "liveview-native-swiftui-realitykit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/liveview-native/liveview-native-swiftui-realitykit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.1;
+			};
+		};
 		0DFA7B482D487C6E00E41B08 /* XCRemoteSwiftPackageReference "liveview-native-swiftui-avkit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/liveview-native/liveview-native-swiftui-avkit";
