@@ -17,17 +17,10 @@ defmodule MyappWeb.RealitykitLive do
      socket
      |> assign(:sensors, SensorsStateAgent.get_state())
      |> assign(:colors, SensorsStateAgent.get_colors())
-     |> assign(:config, %{
-       :number_of_sensors => 10,
-       :x_min => -0.3,
-       :x_max => 0.3,
-       :y_min => -0.1,
-       :y_max => 0.5,
-       :z_compression => 0.1,
-       :z_offset => 0.0
-     })}
+     |> assign(:config, SensorsStateAgent.get_default_config())}
   end
 
+  @spec handle_event(<<_::64, _::_*8>>, any(), any()) :: {:noreply, any()}
   def handle_event(
         "update_sensor",
         %{
@@ -81,8 +74,9 @@ defmodule MyappWeb.RealitykitLive do
           "config.x_min" => x_min,
           "config.y_max" => y_max,
           "config.y_min" => y_min,
-          "config.z_compression" => z_compression,
-          "config.z_offset" => z_offset
+          "config.z_amplitude" => z_amplitude,
+          "config.z_offset" => z_offset,
+          "config.size" => size
         } = params,
         socket
       ) do
@@ -97,7 +91,8 @@ defmodule MyappWeb.RealitykitLive do
       :y_min => get_rounded_float(y_min),
       :y_max => get_rounded_float(y_max),
       :z_offset => get_rounded_float(z_offset),
-      :z_compression => get_rounded_float(z_compression)
+      :z_amplitude => get_rounded_float(z_amplitude),
+      :size => get_rounded_float(size)
     }
 
     SensorsStateAgent.reset(new_config)
@@ -169,6 +164,18 @@ defmodule MyappWeb.RealitykitLive do
           /> {@config.number_of_sensors}
         </li>
         <li>
+          <label for="config.size">config.size</label>
+          <input
+            name="config.size"
+            type="range"
+            value={@config.size}
+            min="0.02"
+            max="1"
+            step="0.001"
+            phx-value={@config.size}
+          /> {@config.size}
+        </li>
+        <li>
           <label for="config.x_min">config.x_min</label>
           <input
             name="config.x_min"
@@ -215,16 +222,16 @@ defmodule MyappWeb.RealitykitLive do
           /> {@config.y_max}
         </li>
         <li>
-          <label for="config.z_compression">config.z_compression</label>
+          <label for="config.z_amplitude">config.z_amplitude</label>
           <input
-            name="config.z_compression"
+            name="config.z_amplitude"
             type="range"
-            value={@config.z_compression}
+            value={@config.z_amplitude}
             min="-1"
             max="1"
             step="0.01"
-            phx-value={@config.z_compression}
-          /> {@config.z_compression}
+            phx-value={@config.z_amplitude}
+          /> {@config.z_amplitude}
 
           <label for="config.z_offset">config.z_offset</label>
           <input

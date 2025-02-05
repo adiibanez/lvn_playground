@@ -4,7 +4,7 @@ defmodule SensorsStateAgent do
   require Logger
 
   def start_link(params) do
-    configuration = %{:number_of_sensors => 10}
+    configuration = get_default_config()
 
     Logger.debug("SensorsStateAgent start_link2: #{inspect(configuration)}")
     # IO.inspect(via_tuple(configuration.sensor_id), label: "via tuple for sensor")
@@ -14,6 +14,19 @@ defmodule SensorsStateAgent do
       end,
       name: :sensors_state_agent
     )
+  end
+
+  def get_default_config() do
+    %{
+      :number_of_sensors => 10,
+      :x_min => -0.5,
+      :x_max => 0.5,
+      :y_min => -0.3,
+      :y_max => 0.2,
+      :z_amplitude => 0.05,
+      :z_offset => 0.0,
+      :size => 0.03
+    }
   end
 
   def get_colors() do
@@ -96,21 +109,21 @@ defmodule MyApp.SensorArrangement do
     "teal",
     "indigo",
     "brown",
-    "gray",
-    "gray2",
-    "gray3",
-    "gray4",
-    "gray5",
-    "gray6",
-    "label",
-    "secondarylabel",
-    "tertiarylabel",
-    "quaternarylabel",
-    "fill",
-    "secondarysystemfill",
-    "tertiarysystemfill",
-    "quaternarysystemfill",
-    "placeholdertext"
+    "gray"
+    # "gray2",
+    # "gray3",
+    # "gray4",
+    # "gray5",
+    # "gray6",
+    # "label"
+    # "secondarylabel",
+    # "tertiarylabel",
+    # "quaternarylabel",
+    # "fill",
+    # "secondarysystemfill",
+    # "tertiarysystemfill",
+    # "quaternarysystemfill",
+    # "placeholdertext"
   ]
 
   def get_colors_(number \\ 100) do
@@ -123,27 +136,29 @@ defmodule MyApp.SensorArrangement do
 
   @doc """
   Arranges sensors in an elliptic (rainbow) shape with configurable
-  min/max X and Y positions.
+  min/max X and Y positions, and the Z-axis moving forth and back (once).
 
   Configuration parameters:
     * number_of_sensors: The number of sensors to arrange.
-    * x_min: Minimum X position.
-    * x_max: Maximum X position.
-    * y_min: Minimum Y position.
-    * y_max: Maximum Y position.
-    * z_compression: Compresses the curve along the z-axis.  Defaults to 0.1.
-    * z_offset:  Offsets all sensors along the z-axis.  Defaults to 0.0.
+    * x_min: Minimum X position. Defaults to -0.3.
+    * x_max: Maximum X position. Defaults to 0.3.
+    * y_min: Minimum Y position. Defaults to -0.1.
+    * y_max: Maximum Y position. Defaults to 0.2.
+    * z_amplitude: Amplitude of the Z-axis movement. Defaults to 0.25.
+    * z_offset: Offsets all sensors along the z-axis. Defaults to 0.0.
   """
+
   def get_initial_sensors(config) do
     number_of_sensors = config[:number_of_sensors]
     x_min = config[:x_min] || -0.3
     x_max = config[:x_max] || 0.3
     y_min = config[:y_min] || -0.1
     y_max = config[:y_max] || 0.2
-    # Default Z compression
-    z_compression = config[:z_compression] || 0.1
-    # Default Z offset
+    # Default Z amplitude
+    z_amplitude = config[:z_amplitude] || 0.25
     z_offset = config[:z_offset] || 0.0
+
+    size = config[:size] || 0.03
 
     Enum.map(1..number_of_sensors, fn sensor_num ->
       # Normalize the sensor number to a value between 0 and 1
@@ -162,13 +177,8 @@ defmodule MyApp.SensorArrangement do
       # Position on the semi-circle
       sensor_y = y_center + y_amplitude * :math.sin(angle)
 
-      # Z: Compressed along the z-axis and offset
-      sensor_z = z_offset + z_compression * t
-
-      # Map z to the desired range [0, 1]
-      # z = t  # Linear z progression
-      # z = :math.pow(t, 2) # parabolic progression
-      # z = :math.sqrt(t) # Slower z progression
+      # Z: Forth and back, then stop
+      sensor_z = z_offset + z_amplitude * :math.sin(:math.pi() * t)
 
       Logger.debug("Sensor #{sensor_num}: x=#{sensor_x}, y=#{sensor_y}, z=#{sensor_z}")
 
@@ -176,7 +186,7 @@ defmodule MyApp.SensorArrangement do
 
       %{
         sensor_id => %{
-          :size => 0.05,
+          :size => size,
           :translation => %{
             :x => get_rounded_float(sensor_x),
             :y => get_rounded_float(sensor_y),

@@ -42,8 +42,8 @@ defmodule MyappWeb.RealitykitLive.SwiftUI do
     <PhysicallyBasedMaterial
     template="materials"
     baseColor={"system-#{sensor.color}"}
-    metallic={0.5}
-    roughness={0.2}
+    metallic={1}
+    roughness={0.0}
     />
 
     <Group template="components">
@@ -61,14 +61,8 @@ defmodule MyappWeb.RealitykitLive.SwiftUI do
         minimumBounds:y={0.5}
         minimumBounds:z={0.5}
       />
-
-
     </Group>
-
-
     </ModelEntity>
-
-
     </RealityView>
     """
   end
