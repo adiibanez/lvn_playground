@@ -10,7 +10,7 @@ defmodule MyappWeb.HubAndSpokeNavigationLive do
     ~H""
   end
 
-  def handle_event("select", %{ "index" => index }, socket) do
+  def handle_event("select", %{"index" => index}, socket) do
     {:noreply, assign(socket, selection: String.to_integer(index))}
   end
 

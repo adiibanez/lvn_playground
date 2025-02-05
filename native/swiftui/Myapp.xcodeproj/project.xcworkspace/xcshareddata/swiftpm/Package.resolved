@@ -1,5 +1,5 @@
 {
-  "originHash" : "1167428c9a1fea48c9f4a35a2c9dc228966a383caf55e4e4c88d3a9c44078743",
+  "originHash" : "c94668ce5dfde0bf1e3120425a2b97f6f39b139fb8e6a58052f7c35c1f8c0560",
   "pins" : [
     {
       "identity" : "liveview-client-swiftui",
@@ -35,15 +35,6 @@
       "state" : {
         "revision" : "964c46d3a225d8822a196614e6317f7341445647",
         "version" : "0.3.0"
-      }
-    },
-    {
-      "identity" : "liveview-native-swiftui-realitykit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/liveview-native/liveview-native-swiftui-realitykit",
-      "state" : {
-        "revision" : "39e91d394dedb4417c863f2cd4f01f9d48091635",
-        "version" : "0.3.1"
       }
     },
     {

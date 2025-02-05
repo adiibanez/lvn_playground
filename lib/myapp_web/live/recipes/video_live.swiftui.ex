@@ -38,6 +38,7 @@ defmodule MyappWeb.VideoLive.SwiftUI do
   end
 
   attr :info, :any
+
   def overlay(assigns) do
     ~LVN"""
     <VStack

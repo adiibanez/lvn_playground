@@ -2,7 +2,7 @@ defmodule MyappWeb.DrillDownNavigationLive do
   use MyappWeb, :live_view
   use MyappNative, :live_view
 
-  def mount(%{ "index" => index }, _session, socket) do
+  def mount(%{"index" => index}, _session, socket) do
     {:ok, assign(socket, title: index)}
   end
 

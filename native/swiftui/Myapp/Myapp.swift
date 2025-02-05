@@ -6,7 +6,8 @@ struct Myapp: App {
     
     var body: some Scene {
         WindowGroup {
-           ContentView()
+           //ContentView()
+            RealitykitView();
              //BluetoothClient()
             //.environmentObject(bleManager) // Inject the manager to the environment
         }

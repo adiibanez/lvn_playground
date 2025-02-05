@@ -1,8 +1,9 @@
 defmodule MyappWeb.MapsLive.SwiftUI do
   use MyappNative, [:render_component, format: :swiftui]
 
-  def render(assigns, %{ "target" => target } = _interface) do
+  def render(assigns, %{"target" => target} = _interface) do
     assigns = assign(assigns, :target, target)
+
     ~LVN"""
     <Map
       style={[

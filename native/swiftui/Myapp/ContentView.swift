@@ -17,10 +17,10 @@ struct ContentView: View {
     var body: some View {
         #LiveView(
             .automatic(
-                development: .localhost(port:4002, path: "/"),
+                development: .localhost(port:4002, path: "/realitykit"),
                 production: URL(string: "https://example.com")!
             ),
-            addons: [.liveForm, .avKit, .ble] // , .avKit
+            addons: [.realityKit] // .liveForm, .avKit, .ble,
         ) {
             ConnectingView()
         } disconnected: {

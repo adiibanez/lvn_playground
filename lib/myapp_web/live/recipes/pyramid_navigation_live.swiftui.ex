@@ -1,7 +1,7 @@
 defmodule MyappWeb.PyramidNavigationLive.SwiftUI do
   use MyappNative, [:render_component, format: :swiftui]
 
-  def render(assigns, %{ "target" => "macos" } = _interface) do
+  def render(assigns, %{"target" => "macos"} = _interface) do
     ~LVN"""
     <%= if @selection != nil do %>
     <Group>
@@ -58,6 +58,7 @@ defmodule MyappWeb.PyramidNavigationLive.SwiftUI do
 
   attr :selection, :integer
   attr :target, :string
+
   def detail_view(assigns) do
     ~LVN"""
     <TabView

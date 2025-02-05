@@ -6,7 +6,7 @@ defmodule MyappWeb.TabsLive do
     {:ok, socket}
   end
 
-  def handle_params(%{ "tab" => tab }, _session, socket) do
+  def handle_params(%{"tab" => tab}, _session, socket) do
     # restore tab state from query params
     {:noreply, assign(socket, tab: tab)}
   end
@@ -16,7 +16,7 @@ defmodule MyappWeb.TabsLive do
     {:noreply, assign(socket, tab: "1")}
   end
 
-  def handle_event("tab-changed", %{ "selection" => tab }, socket) do
+  def handle_event("tab-changed", %{"selection" => tab}, socket) do
     # add query param when tab changes
     {:noreply, push_patch(socket, to: ~p"/navigation/tabs?tab=#{tab}", replace: true)}
   end

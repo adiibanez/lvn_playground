@@ -3,11 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		0B4B2D96F52ABEE042F930AE /* ConnectingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD6D643C35F59A5D1FCC31 /* ConnectingView.swift */; };
+		0D2DBAF32D528E5500C8E219 /* RealitykitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2DBAF22D528E4E00C8E219 /* RealitykitView.swift */; };
+		0D2DBAF42D528E5500C8E219 /* RealitykitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2DBAF22D528E4E00C8E219 /* RealitykitView.swift */; };
 		0DE859822D4A7BB90026555B /* BluetoothUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859812D4A7BB40026555B /* BluetoothUtils.swift */; };
 		0DE859832D4A7BB90026555B /* BluetoothUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859812D4A7BB40026555B /* BluetoothUtils.swift */; };
 		0DE859852D4B89770026555B /* BLECoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859842D4B89730026555B /* BLECoordinator.swift */; };
@@ -51,6 +53,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D2DBAF22D528E4E00C8E219 /* RealitykitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealitykitView.swift; sourceTree = "<group>"; };
+		0DC76ABA2D52873B002860D5 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		0DE859812D4A7BB40026555B /* BluetoothUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothUtils.swift; sourceTree = "<group>"; };
 		0DE859842D4B89730026555B /* BLECoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECoordinator.swift; sourceTree = "<group>"; };
 		0DE859872D4B8A2A0026555B /* CharacteristicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacteristicView.swift; sourceTree = "<group>"; };
@@ -72,6 +76,11 @@
 		ADFC0E0844AFDE455C761950 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E1CD6D643C35F59A5D1FCC31 /* ConnectingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		0DC76AB82D52873B002860D5 /* Sensocto */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Sensocto; sourceTree = "<group>"; };
+		0DC76AD82D528743002860D5 /* SensoctoTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SensoctoTests; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		3318A8F276F6784E23522543 /* Frameworks */ = {
@@ -96,9 +105,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0DC76AB92D52873B002860D5 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				0DC76ABA2D52873B002860D5 /* RealityKitContent */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		0DC76AE22D52880A002860D5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		447CE5679AF08ACA909B338C /* Myapp */ = {
 			isa = PBXGroup;
 			children = (
+				0D2DBAF22D528E4E00C8E219 /* RealitykitView.swift */,
 				0DE859872D4B8A2A0026555B /* CharacteristicView.swift */,
 				0DE859842D4B89730026555B /* BLECoordinator.swift */,
 				0DE859812D4A7BB40026555B /* BluetoothUtils.swift */,
@@ -142,7 +167,11 @@
 			isa = PBXGroup;
 			children = (
 				447CE5679AF08ACA909B338C /* Myapp */,
+				0DC76AB82D52873B002860D5 /* Sensocto */,
+				0DC76AB92D52873B002860D5 /* Packages */,
+				0DC76AD82D528743002860D5 /* SensoctoTests */,
 				5ACBF5454BD0F011D15ADC19 /* Products */,
+				0DC76AE22D52880A002860D5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -199,6 +228,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1430;
 			};
 			buildConfigurationList = 1E2F34E0CBD42FF94FD24F1A /* Build configuration list for PBXProject "Myapp" */;
@@ -214,7 +244,6 @@
 				27D7DE1F75438D6B504F11B8 /* XCRemoteSwiftPackageReference "liveview-client-swiftui" */,
 				90C0BC769CDBC2FE9E2AE4D1 /* XCRemoteSwiftPackageReference "liveview-native-live-form" */,
 				0DFA7B482D487C6E00E41B08 /* XCRemoteSwiftPackageReference "liveview-native-swiftui-avkit" */,
-				0DC76A7B2D5139F3002860D5 /* XCRemoteSwiftPackageReference "liveview-native-swiftui-realitykit" */,
 			);
 			projectDirPath = "";
 			projectRoot = "";
@@ -265,6 +294,7 @@
 				0DFA7B342D48667400E41B08 /* BluetoothClient.swift in Sources */,
 				0DFA7B402D48741A00E41B08 /* AppManager.swift in Sources */,
 				18D2F456DD6A6E706A0ECC72 /* Myapp.swift in Sources */,
+				0D2DBAF32D528E5500C8E219 /* RealitykitView.swift in Sources */,
 				0DFA7B3E2D486CD900E41B08 /* CustomEnvironment.swift in Sources */,
 				E0BD4F368D065EEF9AD4C0E2 /* ReconnectingView.swift in Sources */,
 				0DE859822D4A7BB90026555B /* BluetoothUtils.swift in Sources */,
@@ -287,6 +317,7 @@
 				0DFA7B352D48667400E41B08 /* BluetoothClient.swift in Sources */,
 				0DFA7B412D48741A00E41B08 /* AppManager.swift in Sources */,
 				3EE2EA31FF8F4DD8D0A923D0 /* Myapp.swift in Sources */,
+				0D2DBAF42D528E5500C8E219 /* RealitykitView.swift in Sources */,
 				0DFA7B3D2D486CD900E41B08 /* CustomEnvironment.swift in Sources */,
 				33B74C5008A98BED1403D7B7 /* ReconnectingView.swift in Sources */,
 				0DE859832D4A7BB90026555B /* BluetoothUtils.swift in Sources */,
@@ -544,14 +575,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0DC76A7B2D5139F3002860D5 /* XCRemoteSwiftPackageReference "liveview-native-swiftui-realitykit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/liveview-native/liveview-native-swiftui-realitykit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.3.1;
-			};
-		};
 		0DFA7B482D487C6E00E41B08 /* XCRemoteSwiftPackageReference "liveview-native-swiftui-avkit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/liveview-native/liveview-native-swiftui-avkit";

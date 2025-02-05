@@ -14,6 +14,7 @@ defmodule Myapp.Application do
       {Phoenix.PubSub, name: Myapp.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: Myapp.Finch},
+      {SensorsStateAgent, name: SensorsStateAgent},
       # Start a worker by calling: Myapp.Worker.start_link(arg)
       # {Myapp.Worker, arg},
       # Start to serve requests, typically the last entry

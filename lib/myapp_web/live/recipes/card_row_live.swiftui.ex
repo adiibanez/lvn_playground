@@ -4,6 +4,7 @@ defmodule MyappWeb.CardRowLive.SwiftUI do
   def render(assigns, interface) do
     target = Map.get(interface, "target", "ios")
     assigns = assign(assigns, :target, target)
+
     ~LVN"""
     <ScrollView style='navigationTitle("Card Row")'>
       <ScrollView

@@ -7,9 +7,10 @@ defmodule MyappWeb.SearchLive do
   end
 
   @spec handle_event(<<_::48, _::_*64>>, any(), any()) :: {:noreply, any()}
-  def handle_event("search-changed", %{ "searchText" => search_text }, socket) do
+  def handle_event("search-changed", %{"searchText" => search_text}, socket) do
     {:noreply, assign(socket, search_text: search_text)}
   end
+
   def handle_event("search", _params, socket) do
     {:noreply, assign(socket, entered_search: socket.assigns.search_text)}
   end

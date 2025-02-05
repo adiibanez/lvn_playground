@@ -3,7 +3,7 @@ defmodule MyappWeb.PlaybackBarLive.SwiftUI do
 
   # iOS
 
-  def render(assigns, %{ "target" => "ios" } = _interface) do
+  def render(assigns, %{"target" => "ios"} = _interface) do
     ~LVN"""
     <Group
       style={[
@@ -38,7 +38,7 @@ defmodule MyappWeb.PlaybackBarLive.SwiftUI do
 
   # macOS
 
-  def render(assigns, %{ "target" => "macos" } = _interface) do
+  def render(assigns, %{"target" => "macos"} = _interface) do
     ~LVN"""
     <Group style="toolbar(content: :toolbar)">
       <.song_list />
