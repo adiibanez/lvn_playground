@@ -8,29 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		0B4B2D96F52ABEE042F930AE /* ConnectingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD6D643C35F59A5D1FCC31 /* ConnectingView.swift */; };
-		0D2DBAF32D528E5500C8E219 /* RealitykitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2DBAF22D528E4E00C8E219 /* RealitykitView.swift */; };
-		0D2DBAF42D528E5500C8E219 /* RealitykitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2DBAF22D528E4E00C8E219 /* RealitykitView.swift */; };
-		0DE859822D4A7BB90026555B /* BluetoothUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859812D4A7BB40026555B /* BluetoothUtils.swift */; };
-		0DE859832D4A7BB90026555B /* BluetoothUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859812D4A7BB40026555B /* BluetoothUtils.swift */; };
-		0DE859852D4B89770026555B /* BLECoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859842D4B89730026555B /* BLECoordinator.swift */; };
-		0DE859862D4B89770026555B /* BLECoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859842D4B89730026555B /* BLECoordinator.swift */; };
 		0DE859882D4B8A2E0026555B /* CharacteristicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859872D4B8A2A0026555B /* CharacteristicView.swift */; };
 		0DE859892D4B8A2E0026555B /* CharacteristicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859872D4B8A2A0026555B /* CharacteristicView.swift */; };
-		0DFA7B2C2D4858F300E41B08 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B2B2D4858F300E41B08 /* BluetoothManager.swift */; };
-		0DFA7B2D2D4858F300E41B08 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B2B2D4858F300E41B08 /* BluetoothManager.swift */; };
 		0DFA7B312D48649800E41B08 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DFA7B302D48649800E41B08 /* Info.plist */; };
-		0DFA7B322D48649800E41B08 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DFA7B302D48649800E41B08 /* Info.plist */; };
-		0DFA7B342D48667400E41B08 /* BluetoothClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B332D48666B00E41B08 /* BluetoothClient.swift */; };
-		0DFA7B352D48667400E41B08 /* BluetoothClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B332D48666B00E41B08 /* BluetoothClient.swift */; };
-		0DFA7B3A2D486B8100E41B08 /* BLEClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B392D486B8100E41B08 /* BLEClient.swift */; };
-		0DFA7B3B2D486B8100E41B08 /* BLEClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B392D486B8100E41B08 /* BLEClient.swift */; };
 		0DFA7B3D2D486CD900E41B08 /* CustomEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B3C2D486CD400E41B08 /* CustomEnvironment.swift */; };
 		0DFA7B3E2D486CD900E41B08 /* CustomEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B3C2D486CD400E41B08 /* CustomEnvironment.swift */; };
 		0DFA7B402D48741A00E41B08 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B3F2D48741700E41B08 /* AppManager.swift */; };
 		0DFA7B412D48741A00E41B08 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B3F2D48741700E41B08 /* AppManager.swift */; };
 		0DFA7B4D2D48832F00E41B08 /* LiveViewNativeAVKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFA7B4C2D48832F00E41B08 /* LiveViewNativeAVKit */; };
-		0DFA7B4F2D48917300E41B08 /* BLEClientRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B4E2D48916E00E41B08 /* BLEClientRegistry.swift */; };
-		0DFA7B502D48917300E41B08 /* BLEClientRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B4E2D48916E00E41B08 /* BLEClientRegistry.swift */; };
 		15C8AD6945A92CE0F997AD78 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADFC0E0844AFDE455C761950 /* Preview Assets.xcassets */; };
 		18D2F456DD6A6E706A0ECC72 /* Myapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD637E0BA96F7610CBAC592 /* Myapp.swift */; };
 		1D2AC73DE6EE26581B10837F /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6ABB58F932639C7F7CCD7A /* ErrorView.swift */; };
@@ -53,18 +38,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0D2DBAF22D528E4E00C8E219 /* RealitykitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealitykitView.swift; sourceTree = "<group>"; };
 		0DC76ABA2D52873B002860D5 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
-		0DE859812D4A7BB40026555B /* BluetoothUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothUtils.swift; sourceTree = "<group>"; };
-		0DE859842D4B89730026555B /* BLECoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECoordinator.swift; sourceTree = "<group>"; };
 		0DE859872D4B8A2A0026555B /* CharacteristicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacteristicView.swift; sourceTree = "<group>"; };
-		0DFA7B2B2D4858F300E41B08 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		0DFA7B302D48649800E41B08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0DFA7B332D48666B00E41B08 /* BluetoothClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothClient.swift; sourceTree = "<group>"; };
-		0DFA7B392D486B8100E41B08 /* BLEClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEClient.swift; sourceTree = "<group>"; };
 		0DFA7B3C2D486CD400E41B08 /* CustomEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEnvironment.swift; sourceTree = "<group>"; };
 		0DFA7B3F2D48741700E41B08 /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
-		0DFA7B4E2D48916E00E41B08 /* BLEClientRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEClientRegistry.swift; sourceTree = "<group>"; };
 		27271B7C0B95DACDDFD6BDD2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		38461B59116BB726D368BC4C /* DisconnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectedView.swift; sourceTree = "<group>"; };
 		3D26E200081582BDA3CA685E /* ReconnectingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectingView.swift; sourceTree = "<group>"; };
@@ -78,8 +56,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0DC76AB82D52873B002860D5 /* Sensocto */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Sensocto; sourceTree = "<group>"; };
-		0DC76AD82D528743002860D5 /* SensoctoTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SensoctoTests; sourceTree = "<group>"; };
+		0DBD92AD2D541D6000CE9B58 /* Bluetooth */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Bluetooth; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,15 +100,10 @@
 		447CE5679AF08ACA909B338C /* Myapp */ = {
 			isa = PBXGroup;
 			children = (
-				0D2DBAF22D528E4E00C8E219 /* RealitykitView.swift */,
+				0DBD92AD2D541D6000CE9B58 /* Bluetooth */,
 				0DE859872D4B8A2A0026555B /* CharacteristicView.swift */,
-				0DE859842D4B89730026555B /* BLECoordinator.swift */,
-				0DE859812D4A7BB40026555B /* BluetoothUtils.swift */,
-				0DFA7B4E2D48916E00E41B08 /* BLEClientRegistry.swift */,
 				0DFA7B3F2D48741700E41B08 /* AppManager.swift */,
 				0DFA7B3C2D486CD400E41B08 /* CustomEnvironment.swift */,
-				0DFA7B392D486B8100E41B08 /* BLEClient.swift */,
-				0DFA7B332D48666B00E41B08 /* BluetoothClient.swift */,
 				0DFA7B302D48649800E41B08 /* Info.plist */,
 				4E972F4A6DBF6548A636DAEA /* Preview Content */,
 				27271B7C0B95DACDDFD6BDD2 /* Assets.xcassets */,
@@ -141,7 +113,6 @@
 				5B6ABB58F932639C7F7CCD7A /* ErrorView.swift */,
 				5FD637E0BA96F7610CBAC592 /* Myapp.swift */,
 				3D26E200081582BDA3CA685E /* ReconnectingView.swift */,
-				0DFA7B2B2D4858F300E41B08 /* BluetoothManager.swift */,
 			);
 			path = Myapp;
 			sourceTree = "<group>";
@@ -167,9 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				447CE5679AF08ACA909B338C /* Myapp */,
-				0DC76AB82D52873B002860D5 /* Sensocto */,
 				0DC76AB92D52873B002860D5 /* Packages */,
-				0DC76AD82D528743002860D5 /* SensoctoTests */,
 				5ACBF5454BD0F011D15ADC19 /* Products */,
 				0DC76AE22D52880A002860D5 /* Frameworks */,
 			);
@@ -189,6 +158,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				0DBD92AD2D541D6000CE9B58 /* Bluetooth */,
 			);
 			name = "Myapp Watch App";
 			packageProductDependencies = (
@@ -211,6 +183,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				0DBD92AD2D541D6000CE9B58 /* Bluetooth */,
+			);
 			name = Myapp;
 			packageProductDependencies = (
 				FD26833AE4774D96E5857436 /* LiveViewNative */,
@@ -229,7 +204,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1620;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1620;
 			};
 			buildConfigurationList = 1E2F34E0CBD42FF94FD24F1A /* Build configuration list for PBXProject "Myapp" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -271,7 +246,6 @@
 			files = (
 				8EDCB8A31102CC895E530B2B /* Assets.xcassets in Resources */,
 				53061756E5397EC69B34FCC2 /* Preview Assets.xcassets in Resources */,
-				0DFA7B322D48649800E41B08 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,21 +257,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADACB4928417C9EF5F110369 /* ConnectingView.swift in Sources */,
-				0DFA7B4F2D48917300E41B08 /* BLEClientRegistry.swift in Sources */,
-				0DE859852D4B89770026555B /* BLECoordinator.swift in Sources */,
 				0DE859882D4B8A2E0026555B /* CharacteristicView.swift in Sources */,
 				A319D3E76E917990C75AEDEB /* ContentView.swift in Sources */,
-				0DFA7B3A2D486B8100E41B08 /* BLEClient.swift in Sources */,
 				E975345F106B98E9321F9804 /* DisconnectedView.swift in Sources */,
-				0DFA7B2D2D4858F300E41B08 /* BluetoothManager.swift in Sources */,
 				1D2AC73DE6EE26581B10837F /* ErrorView.swift in Sources */,
-				0DFA7B342D48667400E41B08 /* BluetoothClient.swift in Sources */,
 				0DFA7B402D48741A00E41B08 /* AppManager.swift in Sources */,
 				18D2F456DD6A6E706A0ECC72 /* Myapp.swift in Sources */,
-				0D2DBAF32D528E5500C8E219 /* RealitykitView.swift in Sources */,
 				0DFA7B3E2D486CD900E41B08 /* CustomEnvironment.swift in Sources */,
 				E0BD4F368D065EEF9AD4C0E2 /* ReconnectingView.swift in Sources */,
-				0DE859822D4A7BB90026555B /* BluetoothUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,21 +273,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B4B2D96F52ABEE042F930AE /* ConnectingView.swift in Sources */,
-				0DFA7B502D48917300E41B08 /* BLEClientRegistry.swift in Sources */,
-				0DE859862D4B89770026555B /* BLECoordinator.swift in Sources */,
 				0DE859892D4B8A2E0026555B /* CharacteristicView.swift in Sources */,
 				681EE611E60B07B619F971C8 /* ContentView.swift in Sources */,
-				0DFA7B3B2D486B8100E41B08 /* BLEClient.swift in Sources */,
 				AC110A1EC6D0E9309AA3B288 /* DisconnectedView.swift in Sources */,
-				0DFA7B2C2D4858F300E41B08 /* BluetoothManager.swift in Sources */,
 				6CFC3CB2A5DAABD8B0B2C6DB /* ErrorView.swift in Sources */,
-				0DFA7B352D48667400E41B08 /* BluetoothClient.swift in Sources */,
 				0DFA7B412D48741A00E41B08 /* AppManager.swift in Sources */,
 				3EE2EA31FF8F4DD8D0A923D0 /* Myapp.swift in Sources */,
-				0D2DBAF42D528E5500C8E219 /* RealitykitView.swift in Sources */,
 				0DFA7B3D2D486CD900E41B08 /* CustomEnvironment.swift in Sources */,
 				33B74C5008A98BED1403D7B7 /* ReconnectingView.swift in Sources */,
-				0DE859832D4A7BB90026555B /* BluetoothUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

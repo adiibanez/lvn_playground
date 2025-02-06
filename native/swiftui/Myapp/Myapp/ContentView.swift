@@ -6,7 +6,6 @@ import Combine
 import CoreBluetooth
 import LiveViewNativeAVKit
 
-
 struct ContentView: View {
     //@EnvironmentObject var bleManager: BluetoothManager
     //@State private var messageFromBle: String = "No Message"
@@ -17,10 +16,10 @@ struct ContentView: View {
     var body: some View {
         #LiveView(
             .automatic(
-                development: .localhost(port:4002, path: "/realitykit"),
+                development: .localhost(port:4002, path: "/"),
                 production: URL(string: "https://example.com")!
             ),
-            addons: [.realityKit] // .liveForm, .avKit, .ble,
+            addons: [.liveForm, .avKit, .ble]
         ) {
             ConnectingView()
         } disconnected: {

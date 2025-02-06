@@ -26,7 +26,7 @@ defmodule MyappWeb.Router do
     pipe_through :browser
 
     # HomeLive
-    live "/", RealitykitLive
+    live "/", HomeLive
     # live "/", RealitykitLive
     live "/realitykit", RealitykitLive
 

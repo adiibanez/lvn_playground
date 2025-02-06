@@ -3,6 +3,7 @@ defmodule MyappWeb.RealitykitLive do
   use MyappWeb, :live_view
   use MyappNative, :live_view
   require Logger
+  import MyAppWeb.Live.Components.ControllerComponents
 
   @colors ["red", "green", "blue", "black", "yellow", "orange"]
 
@@ -17,7 +18,8 @@ defmodule MyappWeb.RealitykitLive do
      socket
      |> assign(:sensors, SensorsStateAgent.get_state())
      |> assign(:colors, SensorsStateAgent.get_colors())
-     |> assign(:config, SensorsStateAgent.get_default_config())}
+     |> assign(:config, SensorsStateAgent.get_default_config())
+     |> assign(:defaults, SensorsStateAgent.get_form_defaults())}
   end
 
   @spec handle_event(<<_::64, _::_*8>>, any(), any()) :: {:noreply, any()}
@@ -30,9 +32,8 @@ defmodule MyappWeb.RealitykitLive do
           "translation.x" => translation_x,
           "translation.y" => translation_y,
           "translation.z" => translation_z,
-          "rotation.x" => rotation_x,
-          "rotation.y" => rotation_y,
-          "rotation.z" => rotation_z
+          "rotation_axis" => rotation_axis,
+          "rotation_angle" => rotation_angle
         } = params,
         socket
       ) do
@@ -45,10 +46,22 @@ defmodule MyappWeb.RealitykitLive do
       z: get_rounded_float(translation_z)
     })
 
+    {rx, ry, rz} =
+      case rotation_axis do
+        "x" -> {1.0, 0.0, 0.0}
+        "y" -> {0.0, 1.0, 0.0}
+        "z" -> {0.0, 0.0, 1.0}
+        # Default
+        _ -> {0.0, 0.0, 0.0}
+      end
+
+    {rx_normalized, ry_normalized, rz_normalized} = MyApp.Vector.normalize({rx, ry, rz}) |> dbg()
+
     SensorsStateAgent.put_attribute(sensor_id, :rotation, %{
-      x: get_rounded_float(rotation_x),
-      y: get_rounded_float(rotation_y),
-      z: get_rounded_float(rotation_z)
+      x: rx_normalized,
+      y: ry_normalized,
+      z: rz_normalized,
+      angle: get_rounded_float(rotation_angle)
     })
 
     PubSub.broadcast(Myapp.PubSub, "sensors", {
@@ -148,227 +161,104 @@ defmodule MyappWeb.RealitykitLive do
     ~H"""
     <h2>Realitykit html view</h2>
 
-    <form phx-submit="config_sensors">
+    <.controller_config_form config={@config} defaults={@defaults}></.controller_config_form>
+
+    <form
+      :for={{sensor_id, sensor} <- @sensors}
+      id={"form-#{sensor_id}"}
+      phx-debounce="100"
+      phx-change="update_sensor"
+      phx-value-sensor_id={sensor_id}
+    >
+      <strong>Sensor: {sensor_id}</strong>
       <ul>
         <li>
-          <input type="submit" value="Config sensors" />
-          <label for="config.number_of_sensors">config.number_of_sensors</label>
-          <input
-            name="config.number_of_sensors"
-            type="range"
-            value={@config.number_of_sensors}
-            min="1"
-            max="50"
-            step="1"
-            phx-value={@config.number_of_sensors}
-          /> {@config.number_of_sensors}
+          <label style={"background-color:#{sensor.color}"} for="color">Color</label>
+
+          {inspect(@colors)}
+
+          <select name="color">
+            <option :for={color <- @colors} value={color} selected={sensor.color == color}>
+              {color}
+            </option>
+          </select>
+
+          <.sensor_range_field field_name="size" value={sensor.size} defaults={@defaults.config.size} />
         </li>
+
         <li>
-          <label for="config.size">config.size</label>
+          <strong>Rotation:</strong>
+          <label>
+            <input
+              type="radio"
+              name="rotation_axis"
+              value="x"
+              checked
+              checked={sensor.rotation.x == 1.0}
+            /> X
+          </label>
+          <label>
+            <input type="radio" name="rotation_axis" value="y" checked={sensor.rotation.y == 1.0} /> Y
+          </label>
+          <label>
+            <input type="radio" name="rotation_axis" value="z" checked={sensor.rotation.z == 1.0} /> Z
+          </label>
+          <label for="rotation_angle">Angle</label>
           <input
-            name="config.size"
+            name="rotation_angle"
             type="range"
-            value={@config.size}
-            min="0.02"
+            value={sensor.rotation.angle}
+            min="-1"
             max="1"
             step="0.001"
-            phx-value={@config.size}
-          /> {@config.size}
+            phx-value={sensor.rotation.angle}
+          />
+          {sensor.rotation.angle}
         </li>
         <li>
-          <label for="config.x_min">config.x_min</label>
-          <input
-            name="config.x_min"
-            type="range"
-            value={@config.x_min}
-            min="-1"
-            max="1"
-            step="0.01"
-            phx-value={@config.x_min}
-          /> {@config.x_min}
-
-          <label for="config.x_max">config.x_max</label>
-          <input
-            name="config.x_max"
-            type="range"
-            value={@config.x_max}
-            min="-1"
-            max="1"
-            step="0.01"
-            phx-value={@config.x_max}
-          /> {@config.x_max}
+          <.sensor_range_field
+            field_name="translation.x"
+            value={sensor.translation.x}
+            defaults={@defaults.sensor.translation_x}
+          />
         </li>
         <li>
-          <label for="config.y_min">config.y_min</label>
-          <input
-            name="config.y_min"
-            type="range"
-            value={@config.y_min}
-            min="-1"
-            max="1"
-            step="0.01"
-            phx-value={@config.y_min}
-          /> {@config.y_min}
-
-          <label for="config.y_max">config.y_max</label>
-          <input
-            name="config.y_max"
-            type="range"
-            value={@config.y_max}
-            min="-1"
-            max="1"
-            step="0.01"
-            phx-value={@config.y_max}
-          /> {@config.y_max}
+          <.sensor_range_field
+            field_name="translation.y"
+            value={sensor.translation.y}
+            defaults={@defaults.sensor.translation_y}
+          />
         </li>
         <li>
-          <label for="config.z_amplitude">config.z_amplitude</label>
-          <input
-            name="config.z_amplitude"
-            type="range"
-            value={@config.z_amplitude}
-            min="-1"
-            max="1"
-            step="0.01"
-            phx-value={@config.z_amplitude}
-          /> {@config.z_amplitude}
-
-          <label for="config.z_offset">config.z_offset</label>
-          <input
-            name="config.z_offset"
-            type="range"
-            value={@config.z_offset}
-            min="-1"
-            max="1"
-            step="0.01"
-            phx-value={@config.z_offset}
-          /> {@config.z_offset}
+          <.sensor_range_field
+            field_name="translation.z"
+            value={sensor.translation.z}
+            defaults={@defaults.sensor.translation_z}
+          />
         </li>
       </ul>
     </form>
-
-    <div :for={{sensor_id, sensor} <- @sensors} id={sensor_id}>
-      <strong>Sensor: {sensor_id}</strong>
-
-      <form
-        id={"form-#{sensor_id}"}
-        phx-debounce="100"
-        phx-change="update_sensor"
-        phx-value-sensor_id={sensor_id}
-      >
-        <ul>
-          <li>
-            <label style={"background-color:#{sensor.color}"} for="color">Color</label>
-
-            {inspect(@colors)}
-
-            <select name="color">
-              <option :for={color <- @colors} value={color} selected={sensor.color == color}>
-                {color}
-              </option>
-            </select>
-          </li>
-          <li>
-            <label for="size">Size</label>
-            <input
-              name="size"
-              type="range"
-              value={sensor.size}
-              min="0.01"
-              max="0.5"
-              step="0.01"
-              phx-value={sensor.size}
-            /> {sensor.size}
-          </li>
-          <li>
-            <div>
-              <label for="translation.x">Translation X</label>
-              <input
-                name="translation.x"
-                type="range"
-                value={sensor.translation.x}
-                min="-0.5"
-                max="0.5"
-                step="0.01"
-                phx-value-axis="translation.x"
-                phx-value={sensor.translation.x}
-              /> {sensor.translation.x}
-            </div>
-            <div>
-              <label for="rotation.x">Rotation X</label>
-              <input
-                name="rotation.x"
-                type="range"
-                value={sensor.rotation.x}
-                min="0.0"
-                max="1"
-                step="0.01"
-                phx-value-axis="rotation.x"
-                phx-value={sensor.rotation.x}
-              /> {sensor.rotation.x}
-            </div>
-          </li>
-
-          <li>
-            <div>
-              <label for="translation.y">Translation Y</label>
-              <input
-                name="translation.y"
-                type="range"
-                value={sensor.translation.y}
-                min="-0.5"
-                max="0.5"
-                step="0.01"
-                phx-value-axis="translation.y"
-                phx-value={sensor.translation.y}
-              /> {sensor.translation.y}
-            </div>
-            <div>
-              <label for="rotation.y">Rotation Y</label>
-              <input
-                name="rotation.y"
-                type="range"
-                value={sensor.rotation.y}
-                min="0.0"
-                max="1"
-                step="0.01"
-                phx-value-axis="rotation.y"
-                phx-value={sensor.rotation.y}
-              /> {sensor.rotation.y}
-            </div>
-          </li>
-
-          <li>
-            <div>
-              <label for="translation.z">Translation Z</label>
-              <input
-                name="translation.z"
-                type="range"
-                value={sensor.translation.z}
-                min="-0.5"
-                max="0.5"
-                step="0.01"
-                phx-value-axis="translation.z"
-                phx-value={sensor.translation.z}
-              /> {sensor.translation.z}
-            </div>
-            <div>
-              <label for="rotation.z">Rotation Z</label>
-              <input
-                name="rotation.z"
-                type="range"
-                value={sensor.rotation.z}
-                min="0.0"
-                max="1"
-                step="0.01"
-                phx-value-axis="rotation.z"
-                phx-value={sensor.rotation.z}
-              /> {sensor.rotation.z}
-            </div>
-          </li>
-        </ul>
-      </form>
-    </div>
     """
+  end
+end
+
+defmodule MyApp.Vector do
+  @doc """
+  Normalizes a 3D vector (represented as a tuple) so its magnitude is 1.
+  """
+  def normalize({x, y, z}) do
+    magnitude = :math.sqrt(x * x + y * y + z * z)
+    # Avoid division by zero
+    if magnitude > 0 do
+      {
+        # round to 3 decimal places
+        round(x / magnitude * 1000) / 1000,
+        round(y / magnitude * 1000) / 1000,
+        round(z / magnitude * 1000) / 1000
+      }
+    else
+      # Handle the case where the vector is (0, 0, 0)
+      {0.0, 0.0, 0.0}
+    end
   end
 end

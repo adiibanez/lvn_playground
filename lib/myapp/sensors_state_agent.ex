@@ -19,13 +19,65 @@ defmodule SensorsStateAgent do
   def get_default_config() do
     %{
       :number_of_sensors => 10,
-      :x_min => -0.5,
-      :x_max => 0.5,
-      :y_min => -0.3,
+      :x_min => -0.7,
+      :x_max => 0.7,
+      :y_min => -0.9,
       :y_max => 0.2,
       :z_amplitude => 0.05,
       :z_offset => 0.0,
       :size => 0.03
+    }
+  end
+
+  def get_form_defaults() do
+    %{
+      :sensor => %{
+        :translation_x => %{:min => "-0.5", :max => "0.5", :step => "0.01"},
+        :translation_y => %{:min => "-0.5", :max => "0.5", :step => "0.01"},
+        :translation_z => %{:min => "-0.5", :max => "0.5", :step => "0.01"}
+      },
+      :config => %{
+        :number_of_sensors => %{
+          :min => 1,
+          :max => 50,
+          :step => 1
+        },
+        :size => %{
+          min: 0.02,
+          max: 1,
+          step: 0.001
+        },
+        :x_min => %{
+          min: -1,
+          max: 1,
+          step: 0.01
+        },
+        :x_max => %{
+          min: -1,
+          max: 1,
+          step: 0.01
+        },
+        :y_min => %{
+          min: -1,
+          max: 1,
+          step: 0.01
+        },
+        :y_max => %{
+          min: -1,
+          max: 1,
+          step: 0.01
+        },
+        :z_amplitude => %{
+          min: -1,
+          max: 1,
+          step: 0.01
+        },
+        :z_offset => %{
+          min: -1,
+          max: 1,
+          step: 0.01
+        }
+      }
     }
   end
 
@@ -160,9 +212,14 @@ defmodule MyApp.SensorArrangement do
 
     size = config[:size] || 0.03
 
-    Enum.map(1..number_of_sensors, fn sensor_num ->
+    rotation_x = 0.0
+    rotation_y = 0.0
+    rotation_z = 0.0
+    rotation_angle = 0.0
+
+    Enum.map(get_sensors_from_number(number_of_sensors), fn sensor_num ->
       # Normalize the sensor number to a value between 0 and 1
-      t = (sensor_num - 1) / (number_of_sensors - 1)
+      t = max(1, sensor_num - 1) / max(1, number_of_sensors - 1)
 
       # X: Map 't' from 0..1 to x_min..x_max
       sensor_x = x_min + t * (x_max - x_min)
@@ -193,11 +250,13 @@ defmodule MyApp.SensorArrangement do
             :z => get_rounded_float(sensor_z)
           },
           :rotation => %{
-            :x => 0,
-            :y => 0,
-            :z => 0
+            :x => rotation_x,
+            :y => rotation_y,
+            :z => rotation_z,
+            # Add angle!
+            angle: rotation_angle
           },
-          :color => Enum.random(@colors),
+          :color => get_sensor_color(sensor_num),
           :attributes => %{
             "heartrate" => %{
               :timestamp => "2021-03-08T14:39:36Z"
@@ -207,6 +266,20 @@ defmodule MyApp.SensorArrangement do
       }
     end)
     |> Enum.reduce(&Map.merge(&1, &2))
+  end
+
+  def get_sensor_color(sensor_number) do
+    num_colors = Enum.count(@colors)
+    color_index = rem(sensor_number - 1, num_colors)
+    Enum.at(@colors, color_index)
+  end
+
+  defp get_sensors_from_number(number_of_sensors) do
+    if number_of_sensors > 1 do
+      Enum.map(1..number_of_sensors, fn n -> n end)
+    else
+      [1]
+    end
   end
 
   def generate_rgb_colors(count) do
