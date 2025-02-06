@@ -22,6 +22,8 @@ defmodule MyappWeb.RealitykitLive.SwiftUI do
     #   color="system-red"
     # />
 
+    # https://medium.com/better-programming/introduction-to-realitykit-on-ios-entities-gestures-and-ray-casting-8f6633c11877
+
     ~LVN"""
 
     <Text id={"realitykit_text_#{sensor_id}"} :for={{sensor_id, sensor} <- @sensors}>Hello {sensor_id}!</Text>
