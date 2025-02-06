@@ -82,6 +82,7 @@ defmodule MyappWeb.RealitykitLive do
   def handle_event(
         "config_sensors",
         %{
+          "_target" => target,
           "config.number_of_sensors" => number_of_sensors,
           "config.x_max" => x_max,
           "config.x_min" => x_min,
