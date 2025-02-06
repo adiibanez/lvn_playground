@@ -276,7 +276,7 @@ defmodule MyApp.SensorArrangement do
 
   defp get_sensors_from_number(number_of_sensors) do
     if number_of_sensors > 1 do
-      Enum.map(1..number_of_sensors, fn n -> n end)
+      Enum.map(1..number_of_sensors, fn n -> n end) |> dbg()
     else
       [1]
     end

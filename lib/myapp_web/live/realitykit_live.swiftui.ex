@@ -24,8 +24,7 @@ defmodule MyappWeb.RealitykitLive.SwiftUI do
 
     ~LVN"""
 
-    <.button phx-click="rotate">Rotate</.button>
-    <Text id="test">Test</Text>
+    <Text id={"realitykit_text_#{sensor_id}"} :for={{sensor_id, sensor} <- @sensors}>Hello {sensor_id}!</Text>
 
     <RealityView id="reality_view_2" phx-click="test_event_realityview" phx-change="test_event_realityview" attachments={["test"]}>
 

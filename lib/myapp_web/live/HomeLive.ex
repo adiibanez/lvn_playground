@@ -30,7 +30,7 @@ defmodule MyappWeb.HomeLive do
       |> Map.keys()
       |> Enum.sort()
 
-    :timer.send_interval(5000, self(), :send_ble_command)
+    # :timer.send_interval(5000, self(), :send_ble_command)
 
     {:ok,
      socket
