@@ -1,10 +1,6 @@
 defmodule MyappWeb.HomeLive.SwiftUI do
   use MyappNative, [:render_component, format: :swiftui]
 
-  def mount(_params, _session, socket) do
-    {:ok, socket}
-  end
-
   def render(assigns, interface) do
     target = Map.get(interface, "target", "ios")
     assigns = assign(assigns, :target, target)
@@ -27,8 +23,7 @@ defmodule MyappWeb.HomeLive.SwiftUI do
               phx-value-test2={1}
             >Send cm ( outside BLEClient ) </Button>
 
-
-        <BLEClient phx-scan-devices="{assigns.ble_scan}">
+        <BLEClient phx-scan-devices={assigns.ble_scan}>
 
         <Text>{assigns.ble_scan}</Text>
           <Button
@@ -44,23 +39,23 @@ defmodule MyappWeb.HomeLive.SwiftUI do
 
 
         </BLEClient>
-          <VideoPlayer
-              autoplay
-              isMuted
-              url="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-              playbackTime={30}
-              phx-debounce={1000}
-              phx-change="player-changed"
-              style={[
-          "frame(maxWidth: .infinity)",
-          "bold(true)"
-        ]}
-            />
-
         <Text>Hello world</Text>
 
         </VStack>
     """
+
+    # <VideoPlayer
+    #           autoplay
+    #           isMuted
+    #           url="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+    #           playbackTime={30}
+    #           phx-debounce={1000}
+    #           phx-change="player-changed"
+    #           style={[
+    #       "frame(maxWidth: .infinity)",
+    #       "bold(true)"
+    #     ]}
+    #         />
   end
 
   def render__(assigns, interface) do

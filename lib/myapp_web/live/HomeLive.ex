@@ -30,16 +30,25 @@ defmodule MyappWeb.HomeLive do
       |> Map.keys()
       |> Enum.sort()
 
+    :timer.send_interval(5000, self(), :send_ble_command)
+
     {:ok,
      socket
      |> assign(:ble_scan, false)
      |> assign(:recipes, all_recipes)
      |> assign(:selected_category, nil)
      |> assign(:categories, categories)
+     |> assign(:ble_scan, false)
      |> assign(
        :featured_recipes,
        Enum.filter(all_recipes, &Enum.member?(@featured_recipes, Path.basename(&1.path)))
      )}
+  end
+
+  @impl true
+  def handle_info(:send_ble_command, socket) do
+    Logger.debug("send_ble_command #{inspect(self())} #{socket.assigns.ble_scan}")
+    {:noreply, assign(socket, :ble_scan, not socket.assigns.ble_scan)}
   end
 
   def handle_event("test-event", params, socket) do
