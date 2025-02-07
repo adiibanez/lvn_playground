@@ -4,7 +4,7 @@ import Combine
 import LiveViewNative
 import CoreBluetooth
 import LiveViewNativeCore
-
+/*
 struct CharacteristicsView: View {
     @ObservedObject var coordinator: BLEClientCoordinator
     let peripheral: CBPeripheral
@@ -38,7 +38,7 @@ struct CharacteristicsView: View {
         .navigationTitle("Characteristics") // CHANGED HERE
 
     }
-}
+}*/
 
 /*extension BLEClientCoordinator {
     func pushBleConnectEvent(_ coordinator: LiveViewNativeCore.LiveViewCoordinator, peripheralName: String, target: Int?) async throws {

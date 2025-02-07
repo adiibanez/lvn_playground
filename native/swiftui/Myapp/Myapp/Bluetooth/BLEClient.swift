@@ -17,7 +17,7 @@ import LiveViewNativeCoreFFI
 struct BLEClient<Root: RootRegistry>: View {
     @LiveElementIgnored
     @StateObject private var coordinator = BLEClientCoordinator()
-
+    
     @_documentation(visibility: public)
     @LiveAttribute(.init(name: "phx-scan-devices"))
     private var scanForPeripherals: Bool = false
@@ -45,7 +45,8 @@ struct BLEClient<Root: RootRegistry>: View {
           .navigationTitle("Discovered Devices") // Added navigation title
         }
         // remote changes
-        .onChange(of: scanForPeripherals) {
+        //.onChange(of: scanForPeripherals) {
+        .onReceive(Just(scanForPeripherals)) { scanForPeripherals in
             if scanForPeripherals == true {
                 print("scanForPeripherals true ")
                 coordinator.startScan()
@@ -56,30 +57,34 @@ struct BLEClient<Root: RootRegistry>: View {
                 coordinator.stopScan()
             }
         }
-        .onChange(of: coordinator.dataUpdate) {
+        
+        //.onChange(of: coordinator.dataUpdate) {
+        .onReceive(Just(coordinator.dataUpdate)) { dataUpdate in
             
-            print("Data update: " + coordinator.dataUpdate)
+            print("Data update: " + dataUpdate)
             Task {
                 try await $liveElement.context.coordinator.pushEvent(
                     type: "click",
                     event: "ble-response",
-                    value: ["response": coordinator.dataUpdate],
+                    value: ["response": dataUpdate],
                     target: $liveElement.element.attributeValue(for: "phx-target").flatMap(Int.init)
                 )
             }
         }
-        .onChange(of: coordinator.centralManager.isScanning) {
+        
+        //.onChange(of: coordinator.centralManager.isScanning) {
+        .onChange(of: coordinator.bleManager.isScanning) { isScanning in
             Task {
                 try await $liveElement.context.coordinator.pushEvent(
                     type: "click",
                     event: "test-event",
-                    value: ["is_scanning": coordinator.centralManager.isScanning],
+                    value: ["is_scanning": isScanning],
                     target: $liveElement.element.attributeValue(for: "phx-target").flatMap(Int.init)
                 )
             }
         }.onTapGesture {
             print("TapGesture: Start scan ... ")
-            coordinator.centralManager.scanForPeripherals(withServices: nil)
+            coordinator.bleManager.scanForPeripherals()
             
             Task {try await $liveElement.context.coordinator.pushEvent(
                 type: "click",
@@ -90,7 +95,7 @@ struct BLEClient<Root: RootRegistry>: View {
             }
         }.onLongPressGesture {
             print("LongPressGesture: Stop scan ... ")
-            coordinator.centralManager.stopScan()
+            coordinator.bleManager.stopScan()
             Task {
                 try await $liveElement.context.coordinator.pushEvent(
                     type: "click",
@@ -105,7 +110,8 @@ struct BLEClient<Root: RootRegistry>: View {
         
         // setup
         .task {
-            coordinator.centralManager.delegate = coordinator
+            //coordinator.bleManager.delegate = coordinator
+            coordinator.bleManager.stopScan()
         }
         .task{
            coordinator.updatePeripheralDisplayData()

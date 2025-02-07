@@ -4,7 +4,7 @@ import LiveViewNativeLiveForm
 import LiveViewNativeCore
 import Combine
 import CoreBluetooth
-import LiveViewNativeAVKit
+//import LiveViewNativeAVKit
 
 struct ContentView: View {
     //@EnvironmentObject var bleManager: BluetoothManager
@@ -19,7 +19,7 @@ struct ContentView: View {
                 development: .localhost(port:4002, path: "/"),
                 production: URL(string: "https://example.com")!
             ),
-            addons: [.liveForm, .avKit, .ble]
+            addons: [.liveForm, .ble]
         ) {
             ConnectingView()
         } disconnected: {

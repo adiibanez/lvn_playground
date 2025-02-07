@@ -1,0 +1,11 @@
+https://opentransportdata.swiss/de/cookbook/strassenverkehr/
+
+
+https://opentransportdata.swiss/de/cookbook/gtfs-rt/#Maximale_Anzahl_Abfragen_pro_Minute
+
+
+
+curl -H "Accept-Encoding: gzip, deflate" -H "Authorization: eyJvcmciOiI2NDA2NTFhNTIyZmEwNTAwMDEyOWJiZTEiLCJpZCI6ImJmYzkxMWI1ODExNzQ0ODc4NzNlZjRiNzkyY2I1MmY1IiwiaCI6Im11cm11cjEyOCJ9" "https://api.opentransportdata.swiss/gtfsrt2020?format=JSON" > test.json.zip
+
+
+eyJvcmciOiI2NDA2NTFhNTIyZmEwNTAwMDEyOWJiZTEiLCJpZCI6ImJmYzkxMWI1ODExNzQ0ODc4NzNlZjRiNzkyY2I1MmY1IiwiaCI6Im11cm11cjEyOCJ9

@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0B4B2D96F52ABEE042F930AE /* ConnectingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD6D643C35F59A5D1FCC31 /* ConnectingView.swift */; };
+		0DBCE4362D5642AC0022D58A /* CoreBluetoothMock in Frameworks */ = {isa = PBXBuildFile; productRef = 0DBCE4352D5642AC0022D58A /* CoreBluetoothMock */; };
+		0DBCE43D2D56457C0022D58A /* CoreBluetoothMock in Frameworks */ = {isa = PBXBuildFile; productRef = 0DBCE43C2D56457C0022D58A /* CoreBluetoothMock */; };
 		0DE859882D4B8A2E0026555B /* CharacteristicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859872D4B8A2A0026555B /* CharacteristicView.swift */; };
 		0DE859892D4B8A2E0026555B /* CharacteristicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE859872D4B8A2A0026555B /* CharacteristicView.swift */; };
-		0DFA7B312D48649800E41B08 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DFA7B302D48649800E41B08 /* Info.plist */; };
 		0DFA7B3D2D486CD900E41B08 /* CustomEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B3C2D486CD400E41B08 /* CustomEnvironment.swift */; };
 		0DFA7B3E2D486CD900E41B08 /* CustomEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B3C2D486CD400E41B08 /* CustomEnvironment.swift */; };
 		0DFA7B402D48741A00E41B08 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA7B3F2D48741700E41B08 /* AppManager.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0DBCE45E2D56462D0022D58A /* Myapp copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Myapp copy-Info.plist"; path = "/Users/adrianibanez/Documents/projects/2024_sensor-platform/elixir-examples/myapp/native/swiftui/MyApp/Myapp copy-Info.plist"; sourceTree = "<absolute>"; };
 		0DC76ABA2D52873B002860D5 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		0DE859872D4B8A2A0026555B /* CharacteristicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacteristicView.swift; sourceTree = "<group>"; };
 		0DFA7B302D48649800E41B08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 			files = (
 				44C747CE5AD830043ADEF9CF /* LiveViewNative in Frameworks */,
 				D78D349A9D8E96EF4642D37B /* LiveViewNativeLiveForm in Frameworks */,
+				0DBCE43D2D56457C0022D58A /* CoreBluetoothMock in Frameworks */,
 				0DFA7B4D2D48832F00E41B08 /* LiveViewNativeAVKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -75,6 +78,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C035A5E3B667C271ADCDB776 /* LiveViewNative in Frameworks */,
+				0DBCE4362D5642AC0022D58A /* CoreBluetoothMock in Frameworks */,
 				ADB982890A65019E241753EC /* LiveViewNativeLiveForm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,6 +145,7 @@
 				0DC76AB92D52873B002860D5 /* Packages */,
 				5ACBF5454BD0F011D15ADC19 /* Products */,
 				0DC76AE22D52880A002860D5 /* Frameworks */,
+				0DBCE45E2D56462D0022D58A /* Myapp copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -166,6 +171,7 @@
 			packageProductDependencies = (
 				D1205CADEDCC941EABAB807E /* LiveViewNative */,
 				1AA71FF89DE270A54116BBE7 /* LiveViewNativeLiveForm */,
+				0DBCE4352D5642AC0022D58A /* CoreBluetoothMock */,
 			);
 			productName = "Myapp Watch App";
 			productReference = 8722994100BD59B901C37BD4 /* Myapp Watch App.app */;
@@ -191,6 +197,7 @@
 				FD26833AE4774D96E5857436 /* LiveViewNative */,
 				49580280BC4299B4AFAAE1B7 /* LiveViewNativeLiveForm */,
 				0DFA7B4C2D48832F00E41B08 /* LiveViewNativeAVKit */,
+				0DBCE43C2D56457C0022D58A /* CoreBluetoothMock */,
 			);
 			productName = Myapp;
 			productReference = 7F4E86EAA4283020A4BEC80E /* Myapp.app */;
@@ -219,6 +226,7 @@
 				27D7DE1F75438D6B504F11B8 /* XCRemoteSwiftPackageReference "liveview-client-swiftui" */,
 				90C0BC769CDBC2FE9E2AE4D1 /* XCRemoteSwiftPackageReference "liveview-native-live-form" */,
 				0DFA7B482D487C6E00E41B08 /* XCRemoteSwiftPackageReference "liveview-native-swiftui-avkit" */,
+				0DBCE4342D5642AC0022D58A /* XCRemoteSwiftPackageReference "IOS-CoreBluetooth-Mock" */,
 			);
 			projectDirPath = "";
 			projectRoot = "";
@@ -236,7 +244,6 @@
 			files = (
 				CB9D325C0BB854E47E2FAA59 /* Assets.xcassets in Resources */,
 				15C8AD6945A92CE0F997AD78 /* Preview Assets.xcassets in Resources */,
-				0DFA7B312D48649800E41B08 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,6 +542,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0DBCE4342D5642AC0022D58A /* XCRemoteSwiftPackageReference "IOS-CoreBluetooth-Mock" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NordicSemiconductor/IOS-CoreBluetooth-Mock.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.18.0;
+			};
+		};
 		0DFA7B482D487C6E00E41B08 /* XCRemoteSwiftPackageReference "liveview-native-swiftui-avkit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/liveview-native/liveview-native-swiftui-avkit";
@@ -562,6 +577,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0DBCE4352D5642AC0022D58A /* CoreBluetoothMock */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0DBCE4342D5642AC0022D58A /* XCRemoteSwiftPackageReference "IOS-CoreBluetooth-Mock" */;
+			productName = CoreBluetoothMock;
+		};
+		0DBCE43C2D56457C0022D58A /* CoreBluetoothMock */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0DBCE4342D5642AC0022D58A /* XCRemoteSwiftPackageReference "IOS-CoreBluetooth-Mock" */;
+			productName = CoreBluetoothMock;
+		};
 		0DFA7B4C2D48832F00E41B08 /* LiveViewNativeAVKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0DFA7B482D487C6E00E41B08 /* XCRemoteSwiftPackageReference "liveview-native-swiftui-avkit" */;

@@ -1,6 +1,15 @@
 {
-  "originHash" : "c94668ce5dfde0bf1e3120425a2b97f6f39b139fb8e6a58052f7c35c1f8c0560",
+  "originHash" : "62544483248170c3b72403c7caeb95bfd076cd4cff847458095a25a68adde799",
   "pins" : [
+    {
+      "identity" : "ios-corebluetooth-mock",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/NordicSemiconductor/IOS-CoreBluetooth-Mock.git",
+      "state" : {
+        "revision" : "500b23852e7d46b63ef8e2a826c2b6f3f6ed50ef",
+        "version" : "0.18.0"
+      }
+    },
     {
       "identity" : "liveview-client-swiftui",
       "kind" : "remoteSourceControl",
@@ -35,6 +44,15 @@
       "state" : {
         "revision" : "964c46d3a225d8822a196614e6317f7341445647",
         "version" : "0.3.0"
+      }
+    },
+    {
+      "identity" : "movesensemds-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mikkojeronen/MovesenseMds-iOS.git",
+      "state" : {
+        "revision" : "0dbaaa3b12598dd1cc706a7883fba32c522c9861",
+        "version" : "1.68.0"
       }
     },
     {
