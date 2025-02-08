@@ -33,6 +33,7 @@ defmodule MyappWeb.RealitykitLive.SwiftUI do
 
     <RealityView  audibleClicks id="reality_view_2" phx-click="test_event_realityview" phx-change="test_event_realityview" counter={@counter}>
 
+
       <Entity
       id="world"
       test={@config.rotation}
@@ -40,6 +41,8 @@ defmodule MyappWeb.RealitykitLive.SwiftUI do
       transform:duration={1}
       cameraTarget
     >
+
+
 
     <.live_component  module={SensorComponent} :for={{sensor_id, sensor} <- @sensors}
       scale={@config.scale}
@@ -50,18 +53,14 @@ defmodule MyappWeb.RealitykitLive.SwiftUI do
 
     </.live_component>
 
-
-
-    <Group>
-
-
-      <CollisionComponent  id={"collision_component"} phx-click="test_collision_component" phx-change="collision_change"/>
+    <Group template="components">
+    <OpacityComponent opacity={1.0}  id={"opacity_component"} />
+    <CollisionComponent  id={"collision_component"} phx-click="test_collision_component" phx-change="collision_change"/>
       <PhysicsBodyComponent mass="0.5"  id={"physics_body_component"} phx-click="test_physics_body_component" phx-change="test_physics_body_component"/>
-      <OpacityComponent opacity={0.8}  id={"opacity_component"} />
       <GroundingShadowComponent  id={"grouping_shadow_component"} castsShadow />
-      <AnchoringComponent id={"anchor"} target="plane" alignment="horizontal" classification="table" />
+      <%!--<AnchoringComponent id={"anchor"} target="plane" alignment="vertical" classification="wall" />--%>
+    </Group>
 
-      </Group>
 
 
     </Entity>

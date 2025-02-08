@@ -22,8 +22,8 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     
     // Data - Track services/characteristics PER PERIPHERAL
     @Published public var discoveredServices: [UUID: [CBUUID: CBService]] = [:] // [peripheralUUID: [serviceUUID: CBService]]
-    @Published public var discoveredCharacteristics: [UUID: [CBUUID: [CBUUID: CBCharacteristic]]] = [:] // [peripheralUUID: [serviceUUID: [charUUID: CBCharacteristic]]]
-    
+    @Published public var discoveredCharacteristics: [UUID: [CBUUID: [CBUUID: CBCharacteristic]]] = [:] // [peripheralUUID: [serviceUUID:
+    @Published public var characteristicValueUpdate:
     // Publishers for specific events
     let didDiscoverPeripheral = PassthroughSubject<CBPeripheral, Never>()
     let didConnectPeripheral = PassthroughSubject<CBPeripheral, Never>()
@@ -314,9 +314,17 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         let characteristics: [CharacteristicDisplayData]
     }
     
-    struct CharacteristicDisplayData: Identifiable{
+    struct CharacteristicDisplayData: Identifiable {
         let id = UUID()
         let uuid: String
         let name: String
+    }
+    
+    struct CharacteristicValueDisplayData: Identifiable {
+        let id = UUID()
+        let peripheralUUID: UUID
+        let characteristicUUID: UUID
+        let uuid: String
+        let value: String
     }
 }

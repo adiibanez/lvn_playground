@@ -18,19 +18,22 @@ defmodule SensorsStateAgent do
 
   def get_default_config() do
     %{
-      :number_of_sensors => 3,
+      :number_of_sensors => 40,
+      :sensors_per_row => 20,
+      :shrink_factor => 0.8,
+      :z_offset_per_row => 0.15,
       :rotation => 0.0,
       :width => 25,
       :height => 25,
       :depth => 25,
       :scale => 0.7,
-      :x_min => -0.7,
-      :x_max => 0.7,
-      :y_min => -0.9,
-      :y_max => 0.2,
-      :z_amplitude => 0.05,
-      :z_offset => 0.0,
-      :size => 0.03
+      :x_min => -0.8,
+      :x_max => 0.8,
+      :y_min => -1.5,
+      :y_max => 0.3,
+      :z_amplitude => -1.5,
+      :z_offset => 0.1,
+      :size => 0.1
     }
   end
 
@@ -43,8 +46,8 @@ defmodule SensorsStateAgent do
       },
       :config => %{
         :number_of_sensors => %{
-          :min => 1,
-          :max => 50,
+          :min => 5,
+          :max => 200,
           :step => 1
         },
         :size => %{
@@ -53,28 +56,28 @@ defmodule SensorsStateAgent do
           step: 0.001
         },
         :x_min => %{
-          min: -1,
-          max: 1,
+          min: -1.0,
+          max: 1.0,
           step: 0.01
         },
         :x_max => %{
-          min: -1,
-          max: 1,
+          min: -0.8,
+          max: 0.8,
           step: 0.01
         },
         :y_min => %{
-          min: -1,
-          max: 1,
+          min: -2,
+          max: 0.5,
           step: 0.01
         },
         :y_max => %{
-          min: -1,
-          max: 1,
+          min: -2.0,
+          max: 0.5,
           step: 0.01
         },
         :z_amplitude => %{
-          min: -1,
-          max: 1,
+          min: -1.5,
+          max: 1.5,
           step: 0.01
         },
         :z_offset => %{
@@ -192,75 +195,160 @@ defmodule MyApp.SensorArrangement do
   end
 
   @doc """
-  Arranges sensors in an elliptic (rainbow) shape with configurable
-  min/max X and Y positions, and the Z-axis moving forth and back (once).
+  Arranges sensors in multiple rows, shrinking additional rows.
 
-  Configuration parameters:
-    * number_of_sensors: The number of sensors to arrange.
-    * x_min: Minimum X position. Defaults to -0.3.
-    * x_max: Maximum X position. Defaults to 0.3.
-    * y_min: Minimum Y position. Defaults to -0.1.
-    * y_max: Maximum Y position. Defaults to 0.2.
-    * z_amplitude: Amplitude of the Z-axis movement. Defaults to 0.25.
-    * z_offset: Offsets all sensors along the z-axis. Defaults to 0.0.
+  Args:
+    config: A map containing configuration options, including:
+      - `number_of_sensors`: Total number of sensors.
+      - `sensors_per_row`: Maximum number of sensors per row (optional, defaults to 10).
+      - `x_min`: Minimum X coordinate for the first row (optional, defaults to -0.3).
+      - `x_max`: Maximum X coordinate for the first row (optional, defaults to 0.3).
+      - `y_min`: Minimum Y coordinate for the first row (optional, defaults to -0.1).
+      - `y_max`: Maximum Y coordinate for the first row (optional, defaults to 0.2).
+      - `z_amplitude`: Z amplitude (optional, defaults to 0.25).
+      - `z_offset`: Z offset (optional, defaults to 0.0).
+      - `size`: Initial sensor size (optional, defaults to 0.03).
+      - `shrink_factor`: Percentage to shrink all config on each new row.
+        (optional, defaults to 0.8, so each additional row is 80% the size of the previous)
+
+  Returns:
+    A map where keys are sensor IDs and values are sensor properties.
   """
+  @doc """
+  Arranges sensors in multiple rows, shrinking the X/Y bounds and stacking rows in Z.
 
+  Args:
+    config: A map containing configuration options:
+      - `number_of_sensors`: Total number of sensors.
+      - `sensors_per_row`: Maximum number of sensors per row (optional, defaults to 10).
+      - `x_min`: Minimum X coordinate for the first row (optional, defaults to -0.3).
+      - `x_max`: Maximum X coordinate for the first row (optional, defaults to 0.3).
+      - `y_min`: Minimum Y coordinate for the first row (optional, defaults to -0.1).
+      - `y_max`: Maximum Y coordinate for the first row (optional, defaults to 0.2).
+      - `z_offset_per_row`: Increase Z coordinate for each new row, this value should be large enough to stack correctly.
+      - `z_amplitude`: Z amplitude (optional, defaults to 0.25).
+      - `size`: Initial sensor size (optional, defaults to 0.03 - this size remains mostly constant).
+      - `shrink_factor`: Percentage to shrink X and Y bounds on each new row (optional, defaults to 0.8).
+
+  Returns:
+    A map where keys are sensor IDs and values are sensor properties.
+  """
+  @doc """
+  Arranges sensors in multiple rows with denser edges, adjusts size based on row count, and stacks in Z.
+
+  Args:
+    config: Configuration map.
+      - `number_of_sensors`: Total number of sensors.
+      - `sensors_per_row`: Maximum sensors per row (optional, defaults to 10).
+      - `x_min`: Minimum X coordinate (optional, defaults to -0.3).
+      - `x_max`: Maximum X coordinate (optional, defaults to 0.3).
+      - `y_min`: Minimum Y coordinate (optional, defaults to -0.1).
+      - `y_max`: Maximum Y coordinate (optional, defaults to 0.2).
+      - `z_amplitude`: Z amplitude (optional, defaults to 0.25).
+      - `z_offset`: Random Z position offset (optional, defaults to 0.0).
+      - `rotation_randomize`: Random rotation adjust.
+      - `size`: Base size.
+      -`base_size`: Base value of size.
+      - `row_size_factor`: Amount to multiply size by for every sensor in a row.
+      - `size_row_offset`: Additional size value for each row.
+      - `edge_density_factor`: Higher value for more density.
+      - `z_offset_per_row`: Z spacing between rows (optional, defaults to 0.3).
+      - `arc_intensity`: Power of the arc on sensors curve.
+
+  Returns:
+    A map where keys are sensor IDs and values are sensor properties.
+  """
+  @spec get_initial_sensors(map()) :: map()
   def get_initial_sensors(config) do
     number_of_sensors = config[:number_of_sensors]
+    sensors_per_row = config[:sensors_per_row] || 10
     x_min = config[:x_min] || -0.3
     x_max = config[:x_max] || 0.3
     y_min = config[:y_min] || -0.1
     y_max = config[:y_max] || 0.2
-    # Default Z amplitude
     z_amplitude = config[:z_amplitude] || 0.25
     z_offset = config[:z_offset] || 0.0
+    rotation_randomize = config[:rotation_randomize] || 0.2
 
-    size = config[:size] || 0.03
+    base_size = config[:base_size] || 0.03
+    row_size_factor = config[:row_size_factor] || 0.002
+    size_row_offset = config[:size_row_offset] || 0.01
+    edge_density_factor = config[:edge_density_factor] || 3.0
+    size = config[:size] || 0.05
 
-    rotation_x = 0.0
-    rotation_y = 0.0
-    rotation_z = 0.0
-    rotation_angle = 0.0
+    shrink_factor = config[:shrink_factor] || 0.8
+    z_offset_per_row = config[:z_offset_per_row] || 0.3
+    arc_intensity = config[:arc_intensity] || 1.0
 
     Enum.map(get_sensors_from_number(number_of_sensors), fn sensor_num ->
-      # Normalize the sensor number to a value between 0 and 1
-      t = max(1, sensor_num - 1) / max(1, number_of_sensors - 1)
+      row = div(sensor_num - 1, sensors_per_row)
+      sensor_index_in_row = rem(sensor_num - 1, sensors_per_row)
 
-      # X: Map 't' from 0..1 to x_min..x_max
-      sensor_x = x_min + t * (x_max - x_min)
+      # Density and Size modifications
+      # Normalize the sensor number to a value between -1 and 1. Higher edge_density_factor values means it will be denser.
+      d = sensor_index_in_row / max(1, sensors_per_row - 1) * 2.0 - 1.0
+
+      # Shape the distribution to be denser on the edges by taking it to a power
+      edge_t = d / 2
+
+      edge_t =
+        cond do
+          d < 0 -> -pow(-edge_t, edge_density_factor)
+          true -> pow(edge_t, edge_density_factor)
+        end
+
+      edge_t = edge_t * 2
+
+      # Size calculation
+      final_size =
+        base_size + Float.floor(sensors_per_row / 2) * row_size_factor -
+          edge_t * size_row_offset
+
+      # Shrink
+      current_shrink_factor = pow(shrink_factor, row)
+
+      current_x_min = x_min * current_shrink_factor
+      current_x_max = x_max * current_shrink_factor
+      current_y_min = y_min * current_shrink_factor
+      current_y_max = y_max * current_shrink_factor
+
+      # Normalize
+      t = max(0, sensor_index_in_row) / max(1, min(number_of_sensors - 1, sensors_per_row - 1))
 
       # Y: Create an elliptic arc within y_min..y_max
       # Center the arc vertically
-      y_center = (y_min + y_max) / 2
+      y_center = (current_y_min + current_y_max) / 2
       # Amplitude of the arc (half the height)
-      y_amplitude = (y_max - y_min) / 2
-      # Full semi-circle
+      y_amplitude = (current_y_max - current_y_min) / 2
+      # Position on the semi-circle with arc shaping
       angle = t * :math.pi()
-      # Position on the semi-circle
-      sensor_y = y_center + y_amplitude * :math.sin(angle)
+      # Arc
+      sensor_y = y_center + y_amplitude * pow(:math.sin(angle), arc_intensity)
 
-      # Z: Forth and back, then stop
-      sensor_z = z_offset + z_amplitude * :math.sin(:math.pi() * t)
+      sensor_x = current_x_min + t * (current_x_max - current_x_min)
 
-      # Logger.debug("Sensor #{sensor_num}: x=#{sensor_x}, y=#{sensor_y}, z=#{sensor_z}")
+      sensor_z =
+        row * z_offset_per_row + z_amplitude * :math.sin(:math.pi() * t) +
+          :rand.uniform(max(1, round(z_offset * 10))) / 10
 
       sensor_id = "Connector#{sensor_num}"
 
+      vector_rotation = %{
+        x: 1.0,
+        y: 0.0,
+        z: 0.0,
+        angle: :rand.uniform(max(1, round(rotation_randomize * 100))) / 100
+      }
+
       %{
         sensor_id => %{
-          :size => size,
+          :size => get_rounded_float(final_size),
           :translation => %{
             :x => get_rounded_float(sensor_x),
             :y => get_rounded_float(sensor_y),
             :z => get_rounded_float(sensor_z)
           },
-          :rotation => %{
-            :x => rotation_x,
-            :y => rotation_y,
-            :z => rotation_z,
-            # Add angle!
-            angle: rotation_angle
-          },
+          :rotation => vector_rotation,
           :color => get_sensor_color(sensor_num),
           :attributes => %{
             "heartrate" => %{
@@ -271,6 +359,10 @@ defmodule MyApp.SensorArrangement do
       }
     end)
     |> Enum.reduce(&Map.merge(&1, &2))
+  end
+
+  defp pow(base, exponent) do
+    :math.pow(base, exponent)
   end
 
   def get_sensor_color(sensor_number) do

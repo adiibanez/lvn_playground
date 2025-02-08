@@ -38,7 +38,26 @@ defmodule MyAppWeb.Live.Components.Swiftui.RealityKit.SensorComponent do
       generateCollisionShapes="recursive"
       phx-change="model_change"
       phx-click="model_tapped"
+      phx-value-sensor_id={@sensor_id}
+      >
+
+      <Sphere id={"box_#{@sensor_id}"}
+      template="mesh"
+      radius={@sensor.size}
+      phx-change="box_change"
+      phx-click="box_tapped"
       phx-value-sensor_id={@sensor_id}>
+    ></Sphere>
+
+    <SimpleMaterial
+    id={"material_#{@sensor_id}"}
+      template="materials"
+      color={"system-#{@sensor.color}"}
+    />
+
+    <%!--
+
+
     <Box id={"box_#{@sensor_id}"}
       template="mesh"
       size={@sensor.size}
@@ -47,20 +66,20 @@ defmodule MyAppWeb.Live.Components.Swiftui.RealityKit.SensorComponent do
       phx-value-sensor_id={@sensor_id}>
     ></Box>
 
+
+    style="onAppear(perform: animateWithSpringEffect)"
+
+
     <PhysicallyBasedMaterial
      id={"physics_base_material_#{@sensor_id}"}
     template="materials"
     baseColor={"system-#{@sensor.color}"}
-    metallic={0.9}
-    roughness={0.1}
-    />
+    metallic={0.6}
+    roughness={0.3}
+    />--%>
 
     <Group template="components">
-      <CollisionComponent  id={"collision_component_#{@sensor_id}"} phx-click="test_collision_component" phx-change="collision_change"/>
-      <PhysicsBodyComponent mass="0.5"  id={"physics_body_component_#{@sensor_id}"} phx-click="test_physics_body_component" phx-change="test_physics_body_component"/>
-      <OpacityComponent opacity={0.8}  id={"opacity_component_#{@sensor_id}"} />
-      <GroundingShadowComponent  id={"grouping_shadow_component_#{@sensor_id}"} castsShadow />
-      <AnchoringComponent id={"anchor_#{@sensor_id}"} target="plane" alignment="horizontal" classification="table" />
+    <OpacityComponent opacity={0.8}  id={"opacity_component_#{@sensor_id}"} />
     </Group>
     </ModelEntity>
     </Group>
