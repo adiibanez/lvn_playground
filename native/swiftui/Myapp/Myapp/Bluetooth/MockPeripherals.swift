@@ -28,7 +28,7 @@
 * POSSIBILITY OF SUCH DAMAGE.
 */
  
-#if targetEnvironment(simulator) && os(iOS)
+#if targetEnvironment(simulator) && (os(iOS) || os(watchOS))
  
 import Foundation
 import CoreBluetoothMock
@@ -129,11 +129,12 @@ extension CBMServiceMock {
     static let hrmService = CBMServiceMock(
         type: CBMUUID(string: "180D"), primary: true,
         characteristics:
-            CBMCharacteristicMock(
+            hrmHeartrateCharacteristic,
+            /*CBMCharacteristicMock(
                 type: CBMUUID(string: "2A37"), // Heart Rate Measurement
                 properties: [.notify],
                 descriptors: CBMClientCharacteristicConfigurationDescriptorMock()
-            ),
+            ),*/
             CBMCharacteristicMock(
                 type: CBMUUID(string: "2A38"), // Body Sensor Location
                 properties: [.read]
@@ -156,7 +157,9 @@ let hrm = CBMPeripheralSpec
         advertisementData: [
             CBMAdvertisementDataLocalNameKey : "NordicHRM",
             CBMAdvertisementDataServiceUUIDsKey : [
-                CBMUUID(string: "180D"), // Heart Rate
+                //CBMUUID(string: "180D"), // Heart Rate
+                CBMUUID(string: "2a38"),
+                CBMUUID(string: "2a37"),
                 CBMUUID(string: "180A"), // Device Information
                 // BlinkyPeripheral.nordicBlinkyServiceUUID // <- this line
             ],
@@ -170,6 +173,51 @@ let hrm = CBMPeripheralSpec
         connectionInterval: 0.250,
         mtu: 251)
     .build()
+
+
+extension CBMCharacteristicMock {
+    
+    static let hrmHeartrateCharacteristic = CBMCharacteristicMock(
+        type: CBMUUID(string: "2A37"), // Heart Rate Measurement
+        properties: [.notify, .read],
+        descriptors: CBMClientCharacteristicConfigurationDescriptorMock()
+    )
+}
+
+var randomHRMUpdatesTimer: Timer?
+
+func simulateRandomHRMUpdates(hrm: CBMPeripheralSpec, hrmHeartrateCharacteristic: CBMCharacteristicMock) {
+    
+    randomHRMUpdatesTimer = Timer.scheduledTimer(withTimeInterval: Double.random(in: 1...3), repeats: true) { _ in
+        let heartRate = UInt16.random(in: 60...100) // Range for UInt16 (can be wider)
+        let heartRateBytes = heartRate.littleEndian.bytes // Get bytes in little-endian order
+
+        // Set the flag to indicate uint16 format (Bit 0 = 1)
+        let flags: UInt8 = 0x01
+
+        // Combine the flag and heart rate bytes into a Data instance
+        var data = Data([flags])
+        data.append(contentsOf: heartRateBytes)
+
+        hrm.simulateValueUpdate(data, for: hrmHeartrateCharacteristic)
+    }
+}
+
+func cancelRandomHRMUpdates() {
+    randomHRMUpdatesTimer?.invalidate()
+    randomHRMUpdatesTimer = nil
+}
+
+// Helper extension to get bytes from a UInt16
+extension UInt16 {
+    var bytes: [UInt8] {
+        return [
+            UInt8(self & 0x00FF),         // Low byte
+            UInt8((self & 0xFF00) >> 8)   // High byte
+        ]
+    }
+}
+
 
 // MARK: - Physical Web Beacon
 

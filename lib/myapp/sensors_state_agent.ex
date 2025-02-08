@@ -6,7 +6,7 @@ defmodule SensorsStateAgent do
   def start_link(params) do
     configuration = get_default_config()
 
-    Logger.debug("SensorsStateAgent start_link2: #{inspect(configuration)}")
+    # Logger.debug("SensorsStateAgent start_link2: #{inspect(configuration)}")
     # IO.inspect(via_tuple(configuration.sensor_id), label: "via tuple for sensor")
     Agent.start_link(
       fn ->
@@ -18,7 +18,12 @@ defmodule SensorsStateAgent do
 
   def get_default_config() do
     %{
-      :number_of_sensors => 10,
+      :number_of_sensors => 3,
+      :rotation => 0.0,
+      :width => 25,
+      :height => 25,
+      :depth => 25,
+      :scale => 0.7,
       :x_min => -0.7,
       :x_max => 0.7,
       :y_min => -0.9,
@@ -83,14 +88,14 @@ defmodule SensorsStateAgent do
 
   def get_colors() do
     Agent.get(:sensors_state_agent, fn state ->
-      get_in(state, [:colors]) |> dbg()
+      get_in(state, [:colors])
     end)
   end
 
   def put_sensor(sensor_id, payload) do
     Agent.update(:sensors_state_agent, fn state ->
       update_in(state, [:sensors, sensor_id], fn sensor ->
-        Logger.debug("Updating sensor: Old: #{inspect(sensor)} New: #{inspect(payload)}")
+        # Logger.debug("Updating sensor: Old: #{inspect(sensor)} New: #{inspect(payload)}")
         payload
       end)
     end)
@@ -99,7 +104,7 @@ defmodule SensorsStateAgent do
   def put_attribute(sensor_id, attribute, payload) do
     Agent.update(:sensors_state_agent, fn state ->
       update_in(state, [:sensors, sensor_id, attribute], fn attribute ->
-        Logger.debug("Updating attribute: Old: #{inspect(attribute)} New: #{inspect(payload)}")
+        # Logger.debug("Updating attribute: Old: #{inspect(attribute)} New: #{inspect(payload)}")
         payload
       end)
     end)
@@ -126,7 +131,7 @@ defmodule SensorsStateAgent do
   end
 
   def reset(config) do
-    Logger.debug("Agent reset config #{inspect(config)}")
+    # Logger.debug("Agent reset config #{inspect(config)}")
 
     Agent.update(:sensors_state_agent, fn state ->
       create_state_from_config(config)
@@ -237,7 +242,7 @@ defmodule MyApp.SensorArrangement do
       # Z: Forth and back, then stop
       sensor_z = z_offset + z_amplitude * :math.sin(:math.pi() * t)
 
-      Logger.debug("Sensor #{sensor_num}: x=#{sensor_x}, y=#{sensor_y}, z=#{sensor_z}")
+      # Logger.debug("Sensor #{sensor_num}: x=#{sensor_x}, y=#{sensor_y}, z=#{sensor_z}")
 
       sensor_id = "Connector#{sensor_num}"
 
@@ -276,7 +281,7 @@ defmodule MyApp.SensorArrangement do
 
   defp get_sensors_from_number(number_of_sensors) do
     if number_of_sensors > 1 do
-      Enum.map(1..number_of_sensors, fn n -> n end) |> dbg()
+      Enum.map(1..number_of_sensors, fn n -> n end)
     else
       [1]
     end

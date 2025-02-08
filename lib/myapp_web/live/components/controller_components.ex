@@ -32,6 +32,44 @@ defmodule MyAppWeb.Live.Components.ControllerComponents do
       <ul>
         <li>
           <.sensor_range_field
+            field_name="width"
+            value={@config.width}
+            defaults={%{min: 1, max: 25, step: 0.01}}
+          />
+        </li>
+        <li>
+          <.sensor_range_field
+            field_name="height"
+            value={@config.height}
+            defaults={%{min: 1, max: 25, step: 0.01}}
+          />
+        </li>
+
+        <li>
+          <.sensor_range_field
+            field_name="scale"
+            value={@config.scale}
+            defaults={%{min: 0.1, max: 1, step: 0.01}}
+          />
+        </li>
+
+        <li>
+          <.sensor_range_field
+            field_name="depth"
+            value={@config.depth}
+            defaults={%{min: 1, max: 25, step: 0.01}}
+          />
+        </li>
+
+        <li>
+          <.sensor_range_field
+            field_name="rotation"
+            value={@config.rotation}
+            defaults={%{min: 0, max: 1, step: 0.01}}
+          />
+        </li>
+        <li>
+          <.sensor_range_field
             field_name="config.number_of_sensors"
             value={@config.number_of_sensors}
             defaults={@defaults.config.number_of_sensors}

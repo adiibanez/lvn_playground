@@ -1,5 +1,5 @@
 {
-  "originHash" : "62544483248170c3b72403c7caeb95bfd076cd4cff847458095a25a68adde799",
+  "originHash" : "7a62e70f1d43ab2ced7097fc51bf7f0bf4bd1da8fbd209e5143e557d33db77be",
   "pins" : [
     {
       "identity" : "ios-corebluetooth-mock",
@@ -49,10 +49,10 @@
     {
       "identity" : "movesensemds-ios",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mikkojeronen/MovesenseMds-iOS.git",
+      "location" : "git@github.com:mikkojeronen/MovesenseMds-iOS.git",
       "state" : {
-        "revision" : "0dbaaa3b12598dd1cc706a7883fba32c522c9861",
-        "version" : "1.68.0"
+        "branch" : "main",
+        "revision" : "2445d3ca995852779f1ffbe62d4b944b2ba62f6f"
       }
     },
     {

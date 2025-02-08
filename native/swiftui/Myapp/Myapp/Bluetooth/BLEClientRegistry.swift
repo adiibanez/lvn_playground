@@ -4,7 +4,7 @@ import SwiftUI
 
 public extension Addons {
     /// An alias for the ``BLE`` addon, with proper capitalization when using it as a type.
-    public typealias BLE = Ble
+    typealias BLE = Ble
     
     /// The main LiveView Native registry for the LiveViewNativeBLE add-on library.
     #if swift(>=5.8)

@@ -21,7 +21,13 @@ defmodule MyappWeb.HomeLive.SwiftUI do
                 <Button
               phx-click="send-ble-command"
               phx-value-test2={1}
-            >Send cm ( outside BLEClient ) </Button>
+            >Send cmd</Button>
+
+            <Button
+              phx-click="toggle-scan"
+              phx-value-test2={1}
+              style="font(.system(size: 10));padding(.vertical, 5);padding(.horizontal, 5)"
+            >Toggle scan {@ble_scan}</Button>
 
         <BLEClient phx-scan-devices={assigns.ble_scan}>
 
@@ -31,12 +37,10 @@ defmodule MyappWeb.HomeLive.SwiftUI do
               phx-value-test={1}
             >Scan</Button>
 
-
             <Button
               phx-click="send-ble-command"
               phx-value-test2={1}
             >Send cmd</Button>
-
 
         </BLEClient>
         <Text>Hello world</Text>

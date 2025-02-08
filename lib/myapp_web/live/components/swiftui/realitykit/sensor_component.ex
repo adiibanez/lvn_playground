@@ -16,6 +16,22 @@ defmodule MyAppWeb.Live.Components.Swiftui.RealityKit.SensorComponent do
 
   def render(assigns, _interface) do
     ~LVN"""
+    <Group>
+
+    <Attachment id={"attachment_#{@sensor_id}"} template="attachments">
+              <HStack style="buttonStyle(.plain); padding(8); glassBackgroundEffect();">
+              <Text>Hello {@sensor_id}</Text>
+                <Button phx-click="rotate">
+                  <Image systemName="arrow.2.circlepath.circle.fill" style="imageScale(.large); symbolRenderingMode(.hierarchical);" />
+                </Button>
+              </HStack>
+              </Attachment>
+              <ViewAttachmentEntity
+              attachment={"attachment_#{@sensor_id}"}
+              transform:translation={[@sensor.translation.x, @sensor.translation.y, @sensor.translation.z + 0.1]}
+              transform:rotation={Nx.to_list(Quaternion.euler(-:math.pi / 2, 0, 0))}
+              />
+
     <ModelEntity  id={"model_entity_#{@sensor_id}"}
       transform:translation={[@sensor.translation.x, @sensor.translation.y, @sensor.translation.z]}
        transform:rotation={[@sensor.rotation.x, @sensor.rotation.y, @sensor.rotation.z, @sensor.rotation.angle]}
@@ -30,13 +46,6 @@ defmodule MyAppWeb.Live.Components.Swiftui.RealityKit.SensorComponent do
       phx-click="box_tapped"
       phx-value-sensor_id={@sensor_id}>
     ></Box>
-
-    <ViewAttachmentEntity  id={"view_attachment_#{@sensor_id}"} attachment={"realitykit_text_#{@sensor_id}"}
-      text={@sensor_id}
-      font="system-font-bold"
-      fontSize={20}
-      color={"system-#{@sensor.color}"}
-     />
 
     <PhysicallyBasedMaterial
      id={"physics_base_material_#{@sensor_id}"}
@@ -54,6 +63,7 @@ defmodule MyAppWeb.Live.Components.Swiftui.RealityKit.SensorComponent do
       <AnchoringComponent id={"anchor_#{@sensor_id}"} target="plane" alignment="horizontal" classification="table" />
     </Group>
     </ModelEntity>
+    </Group>
     """
   end
 end

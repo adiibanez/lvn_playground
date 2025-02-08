@@ -15,11 +15,14 @@ defmodule MyappWeb.RealitykitLive do
     PubSub.subscribe(Myapp.PubSub, "sensors")
 
     {:ok,
-     socket
-     |> assign(:sensors, SensorsStateAgent.get_state())
-     |> assign(:colors, SensorsStateAgent.get_colors())
-     |> assign(:config, SensorsStateAgent.get_default_config())
-     |> assign(:defaults, SensorsStateAgent.get_form_defaults())}
+     assign(
+       socket,
+       sensors: SensorsStateAgent.get_state(),
+       colors: SensorsStateAgent.get_colors(),
+       config: SensorsStateAgent.get_default_config(),
+       defaults: SensorsStateAgent.get_form_defaults(),
+       counter: 0
+     )}
   end
 
   @spec handle_event(<<_::64, _::_*8>>, any(), any()) :: {:noreply, any()}
@@ -71,7 +74,12 @@ defmodule MyappWeb.RealitykitLive do
       }
     })
 
-    {:noreply, socket |> assign(:sensors, SensorsStateAgent.get_state())}
+    {:noreply,
+     assign(
+       socket,
+       sensors: SensorsStateAgent.get_state(),
+       counter: socket.assigns.counter + 1
+     )}
   end
 
   defp get_rounded_float(str_value) do
@@ -83,6 +91,11 @@ defmodule MyappWeb.RealitykitLive do
         "config_sensors",
         %{
           "_target" => target,
+          "rotation" => rotation,
+          "scale" => scale,
+          "width" => width,
+          "height" => height,
+          "depth" => depth,
           "config.number_of_sensors" => number_of_sensors,
           "config.x_max" => x_max,
           "config.x_min" => x_min,
@@ -100,6 +113,11 @@ defmodule MyappWeb.RealitykitLive do
 
     new_config = %{
       :number_of_sensors => number_int,
+      :rotation => get_rounded_float(rotation),
+      :scale => get_rounded_float(scale),
+      :width => get_rounded_float(width),
+      :height => get_rounded_float(height),
+      :depth => get_rounded_float(depth),
       :x_min => get_rounded_float(x_min),
       :x_max => get_rounded_float(x_max),
       :y_min => get_rounded_float(y_min),
@@ -114,7 +132,12 @@ defmodule MyappWeb.RealitykitLive do
     PubSub.broadcast(Myapp.PubSub, "sensors", :config_sensors)
 
     {:noreply,
-     socket |> assign(:sensors, SensorsStateAgent.get_state()) |> assign(:config, new_config)}
+     assign(
+       socket,
+       sensors: SensorsStateAgent.get_state(),
+       config: new_config,
+       counter: socket.assigns.counter + 1
+     )}
   end
 
   def handle_event("test_event_realitykit", params, socket) do
@@ -141,8 +164,11 @@ defmodule MyappWeb.RealitykitLive do
     Logger.debug("Received broadcast: PID: #{inspect(self())} #{inspect(params)}")
 
     {:noreply,
-     socket
-     |> assign(:sensors, SensorsStateAgent.get_state())}
+     assign(socket,
+       sensors: SensorsStateAgent.get_state(),
+       config: socket.assigns.config,
+       counter: socket.assigns.counter + 1
+     )}
   end
 
   def handle_info(
@@ -152,8 +178,11 @@ defmodule MyappWeb.RealitykitLive do
     Logger.debug("Received broadcast: PID: #{inspect(self())} :config_sensors")
 
     {:noreply,
-     socket
-     |> assign(:sensors, SensorsStateAgent.get_state())}
+     assign(socket,
+       sensors: SensorsStateAgent.get_state(),
+       config: socket.assigns.config,
+       counter: socket.assigns.counter + 1
+     )}
   end
 
   def render(assigns) do
@@ -161,6 +190,7 @@ defmodule MyappWeb.RealitykitLive do
 
     ~H"""
     <h2>Realitykit html view</h2>
+    Logger.debug("Rotation #{assigns.config.rotation}") {inspect(assigns.config.rotation)}
 
     <.controller_config_form config={@config} defaults={@defaults}></.controller_config_form>
 

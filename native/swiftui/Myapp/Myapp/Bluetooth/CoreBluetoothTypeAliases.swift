@@ -28,7 +28,7 @@
 * POSSIBILITY OF SUCH DAMAGE.
 */
 
-#if targetEnvironment(simulator) && os(iOS)
+#if targetEnvironment(simulator) && (os(iOS) || os(watchOS))
 import CoreBluetoothMock
 
 // Copy this file to your project to start using CoreBluetoothMock classes

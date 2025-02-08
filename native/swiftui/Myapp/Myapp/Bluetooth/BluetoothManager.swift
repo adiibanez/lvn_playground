@@ -3,12 +3,11 @@ import Foundation
 import Combine
 import CoreBluetooth
 
-#if targetEnvironment(simulator) && os(iOS)
+#if targetEnvironment(simulator) && (os(iOS) || os(watchOS))
 import CoreBluetoothMock
 #endif
 
 // MARK: - Bluetooth Manager (Core Bluetooth Logic)
-
 
 class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
@@ -45,7 +44,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         super.init()
         
         
-#if targetEnvironment(simulator) && os(iOS)
+#if targetEnvironment(simulator) && (os(iOS) || os(watchOS))
         if #available(iOS 13.0, *) {
             // Example how the authorization can be set and changed.
             /*
@@ -59,21 +58,20 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
             }
         }
         CBMCentralManagerMock.simulateInitialState(.poweredOn)
-        CBMCentralManagerMock.simulatePeripherals([blinky, hrm, thingy])
+        CBMCentralManagerMock.simulatePeripherals([blinky, hrm, thingy, powerPack])
         
         // Set up initial conditions.
         blinky.simulateProximityChange(.immediate)
         hrm.simulateProximityChange(.near)
+        
+        simulateRandomHRMUpdates(hrm: hrm, hrmHeartrateCharacteristic: hrmHeartrateCharacteristic)
+        //hrm.simulateValueUpdate(Data([0x01, 0x02]), for: hrmHeartrateCharacteristic )
         thingy.simulateProximityChange(.far)
+        
         blinky.simulateReset()
+        powerPack.simulateProximityChange(.near)
         
         centralManager = CBMCentralManagerFactory.instance(delegate: self, queue: .main, forceMock: false)
-        
-        //centralManager = CBCentralManagerMock(delegate: self, queue: nil, options: //[CBCentralManagerOptionShowPowerAlertKey: true])
-        //configureMockBluetoothManager() // Setup mocked peripherals
-        
-        //        centralManager = CBCentralManager(delegate: self, queue: nil)
-        
         
 #else
         centralManager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey: true])
@@ -126,10 +124,10 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         
         //peripheral.readRSSI()
         
-        let prefixes = ["Movesense", "WH-", "PressureSensor", "FLexsense", "NordicHRM", "Thingy", "nRF Blinky"]
+        let prefixes = ["Movesense", "WH-", "PressureSensor", "FLexsense", "NordicHRM", "Thingy", "nRF Blinky", "Power"]
         
         guard let name = peripheral.name, prefixes.contains(where: { name.hasPrefix($0) }) else{
-            print("Ignoring peripheral \(peripheral.name ?? "Unnamed"), since does not start with Movesense")
+            //print("Ignoring peripheral \(peripheral.name ?? "Unnamed"), since does not start with a known prefix \(prefixes)")
             return
         }
         
@@ -151,7 +149,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
                     //await self.updateRSSI(peripheral: peripheral)
                     //self.updatePeripheralDisplayData()
                 }
-                centralManager.stopScan()
+                //centralManager.stopScan()
                 centralManager.connect(peripheral, options: nil)
             }}
         else{
@@ -231,9 +229,28 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         var characteristicsDictionary: [CBUUID: CBCharacteristic] = [:] //dictionary
         
         for characteristic in characteristics {
-            print("\(peripheral.name ?? "Unnamed Peripheral") Discovered characteristic: \(characteristic) \(BluetoothUtils.name(for: characteristic.uuid))")
+            print("\(peripheral.name ?? "Unnamed Peripheral") Discovered characteristic: \(BluetoothUtils.name(for: characteristic.uuid)) Notifying: \(characteristic.isNotifying)")
+        
+        
+            BluetoothUtils.printCharacteristicProperties(characteristic: characteristic, peripheral: peripheral)
+            
             characteristicsDictionary[characteristic.uuid] = characteristic
-            peripheral.setNotifyValue(true, for: characteristic) //This method should only be called on Characteristics that have Notify
+            
+            //if(characteristic.isNotifying) {
+            
+            if characteristic.properties.contains(.notify) {
+                peripheral.setNotifyValue(true, for: characteristic) //This method should only becalled on Characteristics that have Notify
+            }
+            
+            if characteristic.properties.contains(.read) {
+                //peripheral.readValue(descriptor: characteristic.descriptors)
+                peripheral.readValue(for: characteristic)
+                //var stringValue = BluetoothUtils.decodeValue(for: characteristic.uuid, data: )
+                
+                //print("\(BluetoothUtils.name(for: characteristic.uuid)) read value: \(characteristic.value)")
+            }
+            
+            
             
         }
         //This now associates what characteristic to what service on what peripheral
@@ -255,38 +272,20 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         let characteristicUuid = characteristic.uuid.uuidString
         var stringValue: String? = nil
         
-        if characteristic.uuid == CBUUID(string: "00002a37-0000-1000-8000-00805f9b34fb") { // Heart Rate Characteristic UUID
-            if data.count > 0 {
-                let flags = data[0]
-                let heartRateFormatBit = flags & 0x01
-                var heartRateValue: UInt16 = 0
-                
-                if heartRateFormatBit == 0 {
-                    if data.count >= 2 {
-                        heartRateValue = UInt16(data[1])
-                    }
-                } else {
-                    if data.count >= 3 {
-                        heartRateValue = data.withUnsafeBytes { buffer in
-                            let rawValue: UInt16 = buffer.load(fromByteOffset: 1, as: UInt16.self)
-                            return UInt16(littleEndian: rawValue)
-                        }
-                    }
-                }
-                
-                stringValue = String(describing: heartRateValue)
-                print("Received heart rate: \(heartRateValue) for char \(characteristic.uuid.uuidString)")
-            } else {
-                print("Data is too short to read heartrate")
-            }
-        } else if let decodedString = String(data: data, encoding: .utf8) {
-            stringValue = decodedString
-            print("Received value : \(decodedString) for char \(characteristic.uuid.uuidString)")
+        let uuid = characteristic.uuid
+        
+        var characteristicName = BluetoothUtils.name(for: uuid)
+        
+        if uuid == CBUUID(string: "00002a37-0000-1000-8000-00805f9b34fb") {
+            stringValue = BluetoothUtils.decodeHeartRate(data: data)
+        } else if let decoded = BluetoothUtils.decodeValue(for: uuid, data: data) {
+            stringValue = String(describing: decoded) // Convert to string
         } else {
-            print("Cannot decode data from  \(characteristic.uuid.uuidString)")
+            print("Cannot decode data from \(uuid.uuidString)")
         }
         
         if let stringValue = stringValue {
+            print("Got characteristics update for \(characteristicName) value: \(stringValue) \(characteristic) ")
             didReceiveData.send((peripheral, characteristic.uuid, stringValue))
         }
     }

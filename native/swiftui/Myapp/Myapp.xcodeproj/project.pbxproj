@@ -227,6 +227,7 @@
 				90C0BC769CDBC2FE9E2AE4D1 /* XCRemoteSwiftPackageReference "liveview-native-live-form" */,
 				0DFA7B482D487C6E00E41B08 /* XCRemoteSwiftPackageReference "liveview-native-swiftui-avkit" */,
 				0DBCE4342D5642AC0022D58A /* XCRemoteSwiftPackageReference "IOS-CoreBluetooth-Mock" */,
+				0D8010FE2D569B9A003967B0 /* XCLocalSwiftPackageReference "../../../../MovesenseApi-iOS" */,
 			);
 			projectDirPath = "";
 			projectRoot = "";
@@ -540,6 +541,13 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		0D8010FE2D569B9A003967B0 /* XCLocalSwiftPackageReference "../../../../MovesenseApi-iOS" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../../../MovesenseApi-iOS";
+		};
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
 		0DBCE4342D5642AC0022D58A /* XCRemoteSwiftPackageReference "IOS-CoreBluetooth-Mock" */ = {
